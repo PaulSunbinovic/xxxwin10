@@ -1,0 +1,241 @@
+[ 2015-11-30T06:59:39+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000944s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001080s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.003515s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=0 ) ORDER BY treeodr ASC  [ RunTime:0.000403s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=3 ) ORDER BY treeodr ASC  [ RunTime:0.000287s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=7 ) ORDER BY treeodr ASC  [ RunTime:0.000277s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=2 ) ORDER BY treeodr ASC  [ RunTime:0.000271s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=9 ) ORDER BY treeodr ASC  [ RunTime:0.000237s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=1 ) ORDER BY treeodr ASC  [ RunTime:0.000228s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=5 ) ORDER BY treeodr ASC  [ RunTime:0.000229s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=4 ) ORDER BY treeodr ASC  [ RunTime:0.000288s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=10 ) ORDER BY treeodr ASC  [ RunTime:0.000283s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=6 ) ORDER BY treeodr ASC  [ RunTime:0.000221s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=8 ) ORDER BY treeodr ASC  [ RunTime:0.000209s ]
+
+[ 2015-11-30T07:07:41+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002105s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002336s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.004390s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=0 ) ORDER BY treeodr ASC  [ RunTime:0.000424s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=3 ) ORDER BY treeodr ASC  [ RunTime:0.000285s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=7 ) ORDER BY treeodr ASC  [ RunTime:0.000231s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=2 ) ORDER BY treeodr ASC  [ RunTime:0.000240s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=9 ) ORDER BY treeodr ASC  [ RunTime:0.000328s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=1 ) ORDER BY treeodr ASC  [ RunTime:0.000313s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=5 ) ORDER BY treeodr ASC  [ RunTime:0.000278s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=4 ) ORDER BY treeodr ASC  [ RunTime:0.000232s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=10 ) ORDER BY treeodr ASC  [ RunTime:0.000222s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=6 ) ORDER BY treeodr ASC  [ RunTime:0.000239s ]
+SQL: SELECT * FROM `tb_tree` WHERE ( treepid=8 ) ORDER BY treeodr ASC  [ RunTime:0.000220s ]
+
+[ 2015-11-30T07:30:00+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001412s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001576s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.003846s ]
+SQL: SELECT * FROM `tb_tree`  [ RunTime:0.000342s ]
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+NOTIC: [8] Undefined index: pid C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 26 行.
+NOTIC: [8] Undefined index: id C:\wamp\www\xxx\admin\Lib\Model\TreeModel.class.php 第 27 行.
+
+[ 2015-11-30T07:33:29+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000918s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001059s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.003626s ]
+SQL: SELECT * FROM `tb_tree`  [ RunTime:0.000460s ]
+
+[ 2015-11-30T07:35:25+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000973s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001123s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.007392s ]
+SQL: SELECT * FROM `tb_tree`  [ RunTime:0.000411s ]
+
+[ 2015-11-30T07:36:44+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001111s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001251s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.003383s ]
+SQL: SELECT * FROM `tb_tree` ORDER BY treeodr ASC  [ RunTime:0.000360s ]
+
+[ 2015-11-30T16:26:54+08:00 ] 0.0.0.0 /xxx/admin.php
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004595s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005093s ]
+SQL: SHOW COLUMNS FROM `tb_tree` [ RunTime:0.010058s ]
+SQL: SELECT * FROM `tb_tree` ORDER BY treeodr ASC  [ RunTime:0.000730s ]
+
