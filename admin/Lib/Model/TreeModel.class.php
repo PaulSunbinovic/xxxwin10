@@ -3,7 +3,8 @@ class TreeModel{
 	//###################处理权限极其关系问题统一在这里
 	//############test
 	public function test(){
-		return $test;
+		header("Content-Type:text/html; charset=utf-8");
+		return $arr;
 	}
 	/*
 	3浙江01
@@ -23,6 +24,7 @@ class TreeModel{
 	*/
 	//############test形成有序的数组
 	public function unlimitedForLayer ($cate,$fldnm_id,$fldnm_pid,$name='child',$pid=0) {
+		
 		$arr = array();
 		foreach ($cate as $v) {
 			if ($v[$fldnm_pid] == $pid) {

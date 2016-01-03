@@ -32,8 +32,9 @@ function rplspc($str){
 function logger($log_content,$log_filename){
 		
 	if(!$log_filename){
-		$log_filename='log.txt';//默认根目录
+		$log_filename='log/log.txt';//默认根目录
 	}
+
 	//################注销掉就是不对大小做限制了
 	// $max_size=1024*1024*10;//默认字节Byte 10MB
 	// if(file_exists($log_filename)&&abs(filesize($log_filename))>$max_size){
@@ -72,4 +73,50 @@ function str2json($str){
 	return $json;
 }
 
+############
+function createarrok($cd,$data,$msg,$info){
+	$code=createcode($cd);$rslt=1;$msg?$msg=$msg:$msg='ok';
+	$arr['data']=$data;$arr['code']=$code;$arr['rslt']=$rslt;$arr['msg']=$msg;$arr['info']=$info;
+	return $arr;
+}
+######
+function createarrerr($cd,$msg,$info){
+	$code=createcode($cd);$rslt=0;$msg?$msg=$msg:$msg='error';
+	$arr['data']=null;$arr['code']=$code;$arr['rslt']=$rslt;$arr['msg']=$msg;$arr['info']=$info;
+	logger('#','log/log_'.date('Y-m-d',time()).'.txt');
+	logger('event: '.json_encode($arr,JSON_UNESCAPED_UNICODE),'log/log_'.date('Y-m-d',time()).'.txt');
+	return $arr;
+}
+#######
+function collectinfo($mtd,$para,$valuels){
+	$arr['method']=$mtd;
+	$parau=explode(',',$para);
+	for($i=0;$i<count($valuels);$i++){
+		$key=explode('$',$parau[$i])[1];
+		$arr[$key]=$valuels[$i];
+	}
+	return json_encode($arr);
+}
+##########
+function createcode($cd){
+	if($cd=='ok'){
+		$code='A00000';
+	}else{
+		$asc=0;
+		for($i=0;$i<strlen($cd);$i++){
+			$char=$cd[$i];
+			$asc=$asc+ord($char);
+			
+		}
+		$asc=(String)$asc;
+		$bits=strlen($asc);
+		if($bits<=5){$zeronum=5-$bits;}else{$zeronum=0;}
+		$zero='';
+		for($i=0;$i<$zeronum;$i++){
+			$zero=$zero.'0';
+		}
+		$code='A'.$zero.$asc;
+	}
+	return $code;
+}
 ?>

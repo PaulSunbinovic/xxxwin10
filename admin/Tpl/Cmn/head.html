@@ -1,0 +1,93 @@
+<!-- head包usr.js -->
+<script type="text/javascript" src='__PUBLIC__/JS/admin/usrhd.js'></script>
+
+<script type="text/javascript">
+var hdllgin='__APP__/Usr/loginin';
+var hdllgot='__APP__/Usr/loginout';
+var app_path='__APP__';
+</script>
+<header class="navbar navbar-fixed-top navbar-inverse" id='divhd' style='margin-bottom: 0px;'>
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="__ROOT__/index.php" class="navbar-brand">管理系统后台</a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+					
+					
+			<?php if(session('usridss')){ ?>
+					<!--
+					{$ntfstr}
+					<li>
+					<script>var hdlatcsrc='__APP__/Atc/search/atckw/';</script>
+					<script type="text/javascript" src='__PUBLIC__/JS/admin/atchd.js'></script>
+					    <form class="navbar-form navbar-left">
+						  <div class="input-group">
+						      <input type="text" class="form-control" placeholder="搜索相应的内容" id='atckw'>
+						      <span class="input-group-btn">
+						        <button class="btn btn-primary" type="button" id='atc_search'>Search</button>
+						      </span>
+						    </div>
+						</form>
+					    
+					</li>
+					-->
+					
+					
+					
+					
+					<li class="dropdown">
+						
+						<a data-toggle="dropdown" class="dropdown-toggle " href="#">
+							<img class='img-circle' src="{$usross['usrpt']}" style='width:20px;height:20px'/> {$usross['usrnn']}【{$usross['rlnms']}】 <b class="caret"></b>							
+						</a>
+						
+						<ul class="dropdown-menu">
+							<li>
+								<a href='__APP__/Usr/gtxpg/x/center' id='usr_center'><i class="glyphicon glyphicon-user"></i> 个人中心  </a>
+							</li>
+							
+							<li>
+								<a href="__APP__/Usr/gtxpg/x/modifypw"><i class="glyphicon glyphicon-lock"></i> 更改密码</a>
+							</li>
+							
+							<li class="divider"></li>
+							
+							<li>
+								<a href="#" id='usr_loginout'><i class="glyphicon glyphicon-off"></i> 注销 </a>
+							</li>
+						</ul>
+					</li>
+					<!--
+					<li>
+						<?php if($usross['usrid']==1||$usross['f_usr_sttid']==1){ ?><a href="__APP__/Atc/neiwang"><i class='glyphicon glyphicon-file'></i> 查看内网文章 </a><?php } ?>
+					</li>
+					<li>
+						<a href="__APP__/Atc/collect"><i class='glyphicon glyphicon-heart'></i> 我的收藏 </a>
+					</li>
+					-->
+					<li>
+						<a href="__APP__"><i class='glyphicon glyphicon-home'></i> 主页 </a>
+					</li>
+				
+			<?php }else{ ?>
+			
+				<li>
+					<a href="__APP__"> 主页  </a>
+				</li>
+		
+			<?php } ?>
+				
+			
+		</ul>
+    </nav>
+  </div>
+</header>
+
+
