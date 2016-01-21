@@ -5,7 +5,7 @@ class IndexAction extends Action {
 	//#########index
     public function index(){
     	header("Content-Type:text/html; charset=utf-8");
-    	$usr=D('Usr');$ss=D('SS');$lbmd=D('Lbmd');
+    	$usr=D('Usr');$ss=D('SS');$left=D('Left');
 
     	//###########上面的用户基本信息
 		$arr_usross=$ss->setss();
@@ -18,7 +18,7 @@ class IndexAction extends Action {
 			
 			if($usross['usrps']==='1'){
 				//处理左边列表
-				$lbmd->setleft($usross['usrid']);
+				$left->setleft($usross['usrid']);
 				//处理右边
 				$this->display('manager');
 			}else{

@@ -1,4 +1,4 @@
-'<?php
+<?php
 class SSModel extends Action{
 	//setss 
 	//session('usridss',null);cookie('usridck',null);

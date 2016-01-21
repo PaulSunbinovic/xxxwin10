@@ -13,4 +13,10 @@ class CmnAction extends Action {
     public function righthead(){
     	$this->display('righthead');
     }
+    public function rightselect(){
+        $this->display('rightselect');
+    }
+    public function righttext(){
+        $this->display('righttext');
+    }
 }

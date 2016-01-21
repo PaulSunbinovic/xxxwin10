@@ -95,7 +95,7 @@ function collectinfo($mtd,$para,$valuels){
 		$key=explode('$',$parau[$i])[1];
 		$arr[$key]=$valuels[$i];
 	}
-	return json_encode($arr);
+	return json_encode($arr,JSON_UNESCAPED_UNICODE);
 }
 ##########
 function createcode($cd){
