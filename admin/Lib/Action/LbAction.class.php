@@ -8,6 +8,7 @@ class LbAction extends Action {
 	private $ttl='大类';
 	private $jn=array();
 	private $para=array('lbid'=>'列表ID','lbnm'=>'列表名称','lbodr'=>'列表顺序');
+	private $notself=array();
 	private $spccdtls=array('spccdt_0'=>array('lbid<>0','列表ID不为0【废话只是测试】'));
 	private $odrls=array('lbodr');
 	private $fld_dflt=array('lbid','lbnm','lbodr');
@@ -20,7 +21,7 @@ class LbAction extends Action {
 	##########view
 	private $no_view=array('lbid');
     ##########modify
-    private $no_modify=array('lbid');
+    private $no_update=array('lbid');
 
     //公版
     public function query(){
@@ -93,13 +94,15 @@ class LbAction extends Action {
 
     	$mdmk=$this->mdmk;
     	$lowmdmk=strtolower($mdmk);$this->assign('lowmdmk',$lowmdmk);
+    	$notself=$this->notself;$this->assign('notself',$notself);
+
 
     	$arr_usross=$environment->setenvironment($mdmk);$usross=$arr_usross['data'];
     	
     	$id=$_GET['id'];$this->assign('id',$id);
     	$para=$this->para;$this->assign('para',$para);
     	$jn=$this->jn;
-    	$no_view=$this->no_view;$this->assign('no_modify',$no_modify);
+    	$no_update=$this->no_update;$this->assign('no_update',$no_update);
 
     	if($id==0){$mo=array();}else{
     		$arr_mo=$nb->getmo($mdmk,$id,$para,$jn);$mo=$arr_mo['data'];
@@ -108,6 +111,20 @@ class LbAction extends Action {
     	$this->assign('mo',$mo);
     	$this->assign('ttl',$mo[$lowmdmk.'nm']);
 		$this->display('update');
+   	}
+
+   	//公版
+   	public function doupdate(){
+   		header("Content-Type:text/html; charset=utf-8");
+
+   		$mdmk=$this->mdmk;
+   		
+   		$nb=D('NB');
+   		$arr_pattern=$nb->doupdate($mdmk,$_GET);
+   		$pattern=$arr_pattern['data'];
+   		$data['pattern']=$pattern;
+
+   		$this->ajaxReturn($data,'json');
    	}
 
 }

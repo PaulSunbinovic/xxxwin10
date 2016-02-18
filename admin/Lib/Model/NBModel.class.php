@@ -127,7 +127,7 @@ class NBModel extends Action{
 		return createarrok('ok',$get,'',$info);
 	}
 
-
+	###
 	public function getmo($mdmk,$id,$para,$jn){
 		$info=collectinfo(__METHOD__,'$mdmk,$id,$para,$jn',array($mdmk,$id,$para,$jn));
 		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
@@ -148,6 +148,32 @@ class NBModel extends Action{
 		}
 
 		return createarrok('ok',$mo,'',$info);
+	}
+
+	public function doupdate($mdmk,$get){
+		$info=collectinfo(__METHOD__,'$mdmk,$get',array($mdmk,$get));
+		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
+		if(isset($get)===false){return createarrerr('error_code','get 不能为空',$info);}//防止NULL
+		
+		$lowmdmk=strtolower($mdmk);
+		$m=M($lowmdmk);
+		$mid=$lowmdmk.'id';
+		
+		$id=$get[$mid];
+		unset($get[$mid]);
+		unset($get['_URL_']);
+
+		if($id==0){
+			//add
+			$m->data($get)->add();
+			$pattern=0;
+		}else{
+			$m->where($mid.'='.$id)->setField($get);
+			$pattern=1;
+		}
+		
+
+		return createarrok('ok',$pattern,'',$info);
 	}
 
 } 

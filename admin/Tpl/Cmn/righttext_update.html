@@ -1,11 +1,15 @@
-
+<script>
+	var doupdate='__URL__'+'/doupdate';
+	var obj=new Object();
+	obj["{$lowmdmk}"+"id"]="{$id}";
+</script>
 <!--table部分-->
 <div class='col-md-12' style='padding-top: 20px'>
 	<!--开始-->
 	<table class='table table-hover table-striped table-bordered'>
 		<tbody>
 			<?php foreach($para as $k=>$v){
-					if(!in_array($k, $no_view)){
+					if(!in_array($k, $no_update)){
 			 ?>
 			<tr><td>{$v}</td><td>
 			<?php if(strstr($k, '_')){ ?>
@@ -18,13 +22,77 @@
 			</select>
 			<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
 			<?php }else{ ?>
-			<input id='{$K}' value="{$mo[$k]}">
+			<input id='{$k}' value="{$mo[$k]}">
 			<?php } ?>
 			</td></tr>
 			<?php }
 			} ?>
 		</tbody>
 	</table>
-	
+	<a class='btn btn-primary' id='update'><?php if($id==0){ ?>添加<?php }else{ ?>修改<?php } ?></a>
 </div>
 
+<script>
+//自身参数，初始数据
+var para=new Object();
+var selfpara=new Array();
+var origindata=new Object();
+
+<?php 
+foreach($para as $k=>$v){ 
+	if(!in_array($k, $notself)){
+?>
+para["{$k}"]="{$v}";
+selfpara.push("{$k}");
+origindata["{$k}"]="{$mo[$k]}";
+<?php 
+	}
+} 
+?>
+
+//#########
+$(function(){
+	$('#update').click(function(){
+		//首先把相关的参数数据聚集起来，把自身更新需要的参数以及变动的数据进行传输
+		//由于第一个往往是id所以，就不去考虑了
+		//先判断是否为空
+		for(var i=1;i<selfpara.length;i++){
+			var key=selfpara[i];var tmp=$('#'+key);
+			if($.trim(tmp.val())==''){
+				alert(para[key]+'不能为空');tmp.focus();return;
+			}
+		}
+		//然后判断哪些是有变动的，变动的数值需要提交修改，没有变动的则直接不用接后台了
+		var flag_change=0;
+		for(var i=1;i<selfpara.length;i++){
+			var key=selfpara[i];var tmp=$('#'+key);var valuenow=$.trim(tmp.val());
+			if(valuenow!=origindata[key]){
+				flag_change=1;
+				obj[key]=valuenow;
+			}
+		}
+		if(flag_change==0){alert('没有任何信息改变');return;}
+
+		
+
+		$.ajax({
+            'type': 'GET',
+            'url':doupdate,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': obj,
+            'dataType': 'json',
+            'success': function(data) {
+            	var str='';
+            	if(data['pattern']=='0'){str='添加';}else{str='修改';}
+            	alert(str+'成功！点击返回');
+            	window.location.href=document.referrer;
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+	})
+})
+</script>
