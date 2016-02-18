@@ -119,4 +119,14 @@ function createcode($cd){
 	}
 	return $code;
 }
+########
+function jd($json){
+	return json_decode($json,true);
+}
+######
+function je($arr){
+	return json_encode($arr,JSON_UNESCAPED_UNICODE);
+}
+#########
+
 ?>

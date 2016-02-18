@@ -10,6 +10,8 @@ $urlprx='http://'.$host.'/'.$prjct;
 C('PUBLIC','/'.$prjct.'/Public');
 C('HOST',$urlprx);
 
+C('URL','http://'.$host.'/'.$tmp[1].'/'.$tmp[2]);
+
 //####################配置参数（包括数据库）
 $arr1=array(
 	//'配置项'=>'配置值'

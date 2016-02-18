@@ -1,6 +1,6 @@
 <!--筛选部分-->
 <script>
-  var dosearch='__URL__/dosearch';
+  var dosearch='__APP__/Cmn/dosearch';
   var obj = new Object()
 </script>
 
@@ -28,16 +28,21 @@
 
             <!-- Tab panes -->
             <div class="tab-content" style="padding-top: 10px">
+
               <div role="tabpanel" class="tab-pane active" id="cdt">
+               
               <?php foreach ($para as $key => $value) {
                 if(!in_array($key,$hide_cdt)){
               ?>
               <div class='col-md-3'>
               {$value} 
-              <?php if(strstr($key,'_id')){ ?>
-              <select class='cdt' id='{$key}_cdt'>
+              <?php if(strstr($key,'_')){ ?>
+              <select class='cdt' id='{$key}_nb_cdt'>
+                <?php //处理萃取下主题
+                  $tmp=explode('_', $key);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
+                ?>
                 <option value="">无</option>
-                <?php foreach ($key as $k => $v) { ?><option value='{$k}'>{$v}</option><?php } ?>
+                <volist name='$key' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
               </select>
               <?php }else{ ?><input class='cdt' id='{$key}_nb_cdt'><?php } ?>
               </div>
@@ -45,44 +50,46 @@
                 }
               } ?>  
               </div>
+              <script><?php foreach ($cdt as $cdtvk => $cdtvv) { ?>$('#'+"{$cdtvk}"+'_nb_cdt').val("{$cdtvv}");<?php } ?></script>
 
               <div role="tabpanel" class="tab-pane" id="spccdt">
-              <volist name='spccdt' id='spccdtv'>
+              <?php foreach($spccdtls as $spccdtvk=>$spccdtvv){ ?>
                 <div class='col-md-4'>
-                <button class='spccdt btn <?php if($spccdtv[2]==1){ ?> btn-info <?php }else{ ?>btn-default<?php } ?>' value='{$spccdtv[0]}'>{$spccdtv[1]}</button>
+                <button class='spccdt btn <?php if(in_array($spccdtvk,$spccdt)){ ?> btn-info <?php }else{ ?>btn-default<?php } ?>' value='{$spccdtvk}'>{$spccdtvv[1]}</button>
                 </div>
-              </volist>
+              <?php } ?>
               </div>
 
+              <script>var fldu='-';</script>
               <div role="tabpanel" class="tab-pane" id="fld">
               <?php foreach ($para as $key => $value) {
                 if(!in_array($key,$hide_fld)){
               ?>
               <div class='col-md-2'><input class='fld' type="checkbox" id='{$key}_nb_fld' <?php if(in_array($key,$fld)){ ?>checked<?php } ?> > {$value}</div>
               <?php 
-                }else{
-              ?>
-              <script>obj['{$key}'+'_nb_fld']='{$key}';</script>
-              <?php 
                 }
+              ?>
+              <script>fldu=fldu+"{$key}"+'-';</script>
+              <?php 
               }
               ?>
-
               </div>
 
               <div role="tabpanel" class="tab-pane" id="odr">
-                <volist name='odr' id='odrv'>
+                <?php foreach($odrls as $odrv){ ?>
                   <div class='col-md-4'>
-                  {$para[$odrv[0]]} <select class='odr' id='{$odrv[0]}_nb_odr'><option value="">无</option><option value="ASC">升序</option><option value="DESC">降序</option></select><script>$('#{$odrv[0]}_odr').val('{$odrv[1]}');</script>
+                  {$para[$odrv]} <select class='odr' id='{$odrv}_nb_odr'><option value="">无</option><option value="ASC">升序</option><option value="DESC">降序</option></select>
                   </div>
-                </volist>
+                <?php } ?>
+                <script><?php foreach($odr as $odrvk=>$odrvv){ ?>$('#'+'{$odrvk}'+'_nb_odr').val('{$odrvv}');<?php } ?></script>
               </div>
             </div>
 
           </div>
          <!---->
          <div class='clearfix'></div><hr>
-         <div class='col-md-1'>每页<select id='_nb_lmt' style='width: 30px'><option value='10'>10</option><option value='20'>20</option><option value='50'>50</option><option value='100'>100</option></select></div><div class='col-md-1'><button class='btn btn-primary' id='search'>查询</button></div>
+         <div>每页<select id='nb_lmt' style='width: 60px'><option value='10'>10</option><option value='20'>20</option><option value='50'>50</option><option value='100'>100</option></select></div>
+         <div style="margin-top: 10px"><button class='btn btn-primary' id='search'>查询</button></div>
         </div>
       </div>
     </div>
@@ -104,30 +111,37 @@
       //处理spccdt
       var spccdtls=$('.spccdt');
       for(var i=0;i<spccdtls.size();i++){
-        spccdto=spccdtls[i];
+        spccdto=spccdtls[i]; 
         var cls=$(spccdto).attr('class');
         if(cls.indexOf('info')!=-1){
           obj[i+'_nb_spccdt']=$(spccdto).val();
         }
       }
-      //处理fld
+      //处理fld,未选中的fld需要从里头除名
       var fldls=$('.fld');
       for(var i=0;i<fldls.size();i++){
         fldo=fldls[i];
-        if($(fldo).is(':checked')==true){
+        if($(fldo).is(':checked')==false){
           var id_fld=$(fldo).attr('id');
-          obj[id_fld]='checked';
+          id_fld=id_fld.split('_nb_fld')['0'];
+          fldu=fldu.replace(id_fld+'-','');
         }
       }
+      obj['nb_fld']=fldu;
+      
       //处理odr
       var odrls=$('.odr');
       for(var i=0;i<odrls.size();i++){
-        odro=odrls[i];var id_odr=$(odro).attr['id'];
+        odro=odrls[i];var id_odr=$(odro).attr('id');
         if($(odro).val()!=''){
           obj[id_odr]=$(odro).val();
         }
       }
       //处理lmt
+      obj['nb_lmt']=$('#nb_lmt').val();
+
+      //处理mdmk
+      obj['nb_mdmk']="{$mdmk}";
 
       $.ajax({
           'type': 'GET',
@@ -137,20 +151,26 @@
           'data': obj,
           'dataType': 'json',
           'success': function(data) {
-            if(data['rslt']==1){
-              //window.location.reload();
-            }else{
-              alert(data['msg']);
-            }
-           
-              console.log("success");
+            alert(data['url']);
+            window.location.href=data['url'];
+            console.log("success");
           },
           'error':function() {
-              console.log("error");
+            console.log("error");
           }
       });
     })
 
+    //#############
+    $('.spccdt').click(function(){
+      var cls=$(this).attr('class');
+      if(cls.indexOf('info')!=-1){
+        cls=cls.replace('info','default');
+      }else{
+        cls=cls.replace('default','info');
+      }
+      $(this).attr('class',cls);
+    })
     
   })
 </script>

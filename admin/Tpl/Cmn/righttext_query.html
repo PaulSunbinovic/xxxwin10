@@ -1,0 +1,101 @@
+
+<!--table部分-->
+<div class='col-md-12'>
+	<!--开始-->
+	<table class='table table-hover table-striped table-bordered' id='NBtb'>
+		<thead>
+			<tr style="background-color: #337ab7;color:#fff">
+				<th>序号</th>
+				<volist name='thls' id='thv'>
+					<th>{$thv}</th>
+				</volist>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<volist name='mls' id='mv'>
+				<tr>
+					<td>{$pagestart+$i}</td>
+					<?php foreach ($mv as $key => $value) {
+						if(!in_array($key,$hide_fld)){
+					?>
+						<td>{$value}</td>
+					<?php 
+						}
+					} ?>
+					<td>
+					<?php if($atho['athv']){ ?><a class='btn btn-success btn-sm' href="__URL__/view/id/<?php echo $mv[$lowmdmk.'id'] ?>">查看</a><?php } ?>
+					<?php if($atho['athm']){ ?><a class='btn btn-warning btn-sm' href="__URL__/update/id/<?php echo $mv[$lowmdmk.'id'] ?>">修改</a><?php } ?>
+					<?php if($atho['athd']){ ?><a class='btn btn-danger btn-sm' href="__URL__/delete/id/<?php echo $mv[$lowmdmk.'id'] ?>">删除</a><?php } ?>
+					</td>
+				</tr>
+			</volist>
+			
+		</tbody>
+	</table>
+	
+	<!--结束-->
+	{$page}
+</div>
+
+<script type="text/javascript">
+window.onload=function(){
+	//如果没有NBtb的话就不用加载下面这些了
+	if($('#NBtb').length>0){
+		//创建
+		var cyg=$($('#NBtb').find('thead')[0]).html();//撑衣杆
+		cyg = cyg.replace(/<tr/gm,"<tr id='cyg'");
+		cyg = cyg.replace(/<th/gm,'<td');
+		cyg = cyg.replace(/th>/gm,'td>');
+		$($('#NBtb').find('tbody')[0]).prepend(cyg);
+		$('#cyg').show();
+		var tdu=$($('#NBtb tbody').find('tr')[0]).find('td:visible');
+		var thu=$('#NBtb thead').find('th:visible');
+		var arr={};
+		for(var i=0;i<thu.size();i++){
+			arr[i]=$(tdu[i]).width();
+		}
+		for(var i=0;i<thu.size();i++){
+			$(thu[i]).width(arr[i]);
+		}
+		$('#cyg').hide();
+	}
+}
+
+//tb专用//第一步最重要就是定位
+$.fn.smartFloatTB = function() {
+	var position = function(element) {
+		var top = element.position().top, pos = element.css("position");
+		$(window).scroll(function(){
+			var scrolls = $(this).scrollTop()+$('#divhd').height();//定位在divhd下头
+			if($(window).width()>600&&scrolls > $('#NBtb').offset().top&&scrolls<$('#NBtb').offset().top+$('#NBtb').height()){
+				if (window.XMLHttpRequest) {
+					$('#cyg').show();
+					
+					
+					element.css({
+						position: "fixed",
+						top: $('#divhd').height()
+					});	
+				} else {
+					
+					element.css({
+						position: pos,
+						top: scrolls
+					});	
+				}
+			}else{
+				$('#cyg').hide();
+				element.css({
+					position: pos,
+					top: top
+				});	
+			}
+		});
+	};
+	return $(this).each(function() {
+		position($(this));						 
+	});
+};
+</script>
+<script type="text/javascript">$("#NBtb thead").smartFloatTB();</script>
