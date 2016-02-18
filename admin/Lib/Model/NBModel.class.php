@@ -176,5 +176,21 @@ class NBModel extends Action{
 		return createarrok('ok',$pattern,'',$info);
 	}
 
+	###
+	public function dodelete($mdmk,$id){
+		$info=collectinfo(__METHOD__,'$mdmk,$id',array($mdmk,$id));
+
+		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
+		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
+
+		$lowmdmk=strtolower($mdmk);
+		$m=M($lowmdmk);
+		$mid=$lowmdmk.'id';
+
+		$m->where($mid.'='.$id)->delete();
+
+		return createarrok('ok',$data,'',$info);
+	}
+
 } 
 ?>

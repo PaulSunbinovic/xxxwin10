@@ -104,12 +104,12 @@ class LbAction extends Action {
     	$jn=$this->jn;
     	$no_update=$this->no_update;$this->assign('no_update',$no_update);
 
-    	if($id==0){$mo=array();}else{
-    		$arr_mo=$nb->getmo($mdmk,$id,$para,$jn);$mo=$arr_mo['data'];
+    	if($id==0){$mo=array();$pattern='添加';}else{
+    		$arr_mo=$nb->getmo($mdmk,$id,$para,$jn);$mo=$arr_mo['data'];$pattern='修改';
     	}
     	
     	$this->assign('mo',$mo);
-    	$this->assign('ttl',$mo[$lowmdmk.'nm']);
+    	$this->assign('ttl',$mo[$lowmdmk.'nm'].$pattern);
 		$this->display('update');
    	}
 
@@ -124,6 +124,18 @@ class LbAction extends Action {
    		$pattern=$arr_pattern['data'];
    		$data['pattern']=$pattern;
 
+   		$this->ajaxReturn($data,'json');
+   	}
+
+   	//公版
+   	public function dodelete(){
+   		header("Content-Type:text/html; charset=utf-8");
+
+   		$mdmk=$this->mdmk;
+   		$id=$_GET['id'];
+   		$nb=D('NB');
+   		$nb->dodelete($mdmk,$id);
+   		
    		$this->ajaxReturn($data,'json');
    	}
 

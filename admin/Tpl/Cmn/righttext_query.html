@@ -1,4 +1,6 @@
-
+<script>
+	var dodelete='__URL__/dodelete';
+</script>
 <!--table部分-->
 <div class='col-md-12'>
 	<!--开始-->
@@ -26,7 +28,7 @@
 					<td>
 					<?php if($atho['athv']){ ?><a class='btn btn-success btn-sm' href="__URL__/view/id/<?php echo $mv[$lowmdmk.'id'] ?>">查看</a><?php } ?>
 					<?php if($atho['athm']){ ?><a class='btn btn-warning btn-sm' href="__URL__/update/id/<?php echo $mv[$lowmdmk.'id'] ?>">修改</a><?php } ?>
-					<?php if($atho['athd']){ ?><a class='btn btn-danger btn-sm' href="__URL__/delete/id/<?php echo $mv[$lowmdmk.'id'] ?>">删除</a><?php } ?>
+					<?php if($atho['athd']){ ?><a class='btn btn-danger btn-sm' onclick="dlt(<?php echo $mv[$lowmdmk.'id'] ?>)" >删除</a><?php } ?>
 					</td>
 				</tr>
 			</volist>
@@ -36,6 +38,7 @@
 	
 	<!--结束-->
 	{$page}
+	<br><br><a class='btn btn-primary' href='__URL__/update/id/0'>添加</a>
 </div>
 
 <script type="text/javascript">
@@ -99,3 +102,25 @@ $.fn.smartFloatTB = function() {
 };
 </script>
 <script type="text/javascript">$("#NBtb thead").smartFloatTB();</script>
+<script type="text/javascript">
+function dlt(id){
+	if(confirm("确定要删除此条记录？")){
+		$.ajax({
+            'type': 'GET',
+            'url':dodelete,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': {'id':id},
+            'dataType': 'json',
+            'success': function(data) {
+            	alert('删除成功！');
+            	window.location.reload();
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+	}
+}
+</script>
