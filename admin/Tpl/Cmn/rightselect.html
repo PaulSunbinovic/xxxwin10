@@ -1,6 +1,6 @@
 <!--筛选部分-->
 <script>
-  var dosearch='__APP__/Cmn/dosearch';
+  var dosearch='__APP__/NB/dosearch';
   var obj = new Object();
 </script>
 
@@ -151,7 +151,7 @@
           'data': obj,
           'dataType': 'json',
           'success': function(data) {
-            alert(data['url']);
+            //alert(data['url']);
             window.location.href=data['url'];
             console.log("success");
           },

@@ -33,20 +33,27 @@ class NBModel extends Action{
 		}
 		$m->field($fld_str);$this->assign('thls',$thls);
 		$cdt_str='1=1';
-		foreach($cdt as $cdtvk=>$cdtvv){
-			if(strstr($cdtvk,'_')){
-				$thiscdt=$cdtvk.'='.$cdtvv;
-				//此时一般需要把这个对应的数据给显示出来
-				if($defaultls==1){
-					$tmp=explode('_', $cdtvk);
+
+		//对于cdt无论是有还是没有都必须从para中剃掉hide的属性，然后剩下的统一判断是否需要给ls
+		if($defaultls==1){
+			foreach ($para as $k => $v) {
+				if(!in_array($k,$hide_cdt)&&strstr($k,'_')){
+					$tmp=explode('_', $k);
 					$tmp=explode('id',$tmp[2]);
 					$tmp=$tmp[0];$tmp=M($tmp);
-					$this->assign($cdtvk,$tmp->select());
+					$this->assign($k,$tmp->select());
 				}
-			}else{$thiscdt=$cdtvk." LIKE '%".$cdtvv."%'";}
+			}
+		}
+
+		foreach($cdt as $cdtvk=>$cdtvv){
+			if(strstr($cdtvk,'_')){$thiscdt=$cdtvk.'='.$cdtvv;}else{$thiscdt=$cdtvk." LIKE '%".$cdtvv."%'";}
 			$cdt_str=$cdt_str.' AND '.$thiscdt;
 		}
-		foreach($spccdt as $spccdtv){$cdt_str=$cdt_str.' AND ('.$spccdtls[$spccdtv][0].') ';}
+
+		if($spccdt){
+			foreach($spccdt as $spccdtv){$cdt_str=$cdt_str.' AND ('.$spccdtls[$spccdtv][0].') ';}
+		}
 		$m->where($cdt_str);
 
 		//此时已经可以确定多少条了
@@ -65,9 +72,12 @@ class NBModel extends Action{
 		$show=$page->show();
 		$this->assign('page',$show);
 		
-		$odr_str='';
-		$i=0;foreach($odr as $odrvk=>$odrvv){if($i!=0){$odr_str=$odr_str.',';}$odr_str=$odr_str.$odrvk.' '.$odrvv;$i++;}
-		$m->order($odr_str);
+		if($odr){
+			$odr_str='';
+			$i=0;foreach($odr as $odrvk=>$odrvv){if($i!=0){$odr_str=$odr_str.',';}$odr_str=$odr_str.$odrvk.' '.$odrvv;$i++;}
+			$m->order($odr_str);
+		}
+
 		$this->assign('pagestart',$page->firstRow);
 		$m->limit($page->firstRow.','.$page->listRows);
 
@@ -127,70 +137,9 @@ class NBModel extends Action{
 		return createarrok('ok',$get,'',$info);
 	}
 
-	###
-	public function getmo($mdmk,$id,$para,$jn){
-		$info=collectinfo(__METHOD__,'$mdmk,$id,$para,$jn',array($mdmk,$id,$para,$jn));
-		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
-		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
-		if(isset($para)===false){return createarrerr('error_code','para 不能为空',$info);}//防止NULL
-		if(isset($jn)===false){return createarrerr('error_code','jn 不能为空',$info);}//防止NULL
-		
-		$lowmdmk=strtolower($mdmk);
-		$m=M($lowmdmk);
-		foreach($jn as $jnv){$m->join($jnv);}
-		$mo=$m->where($lowmdmk.'id='.$id)->find();
-		//把mo中的给别人修改的ls选项列出来
-		foreach($mo as $k=>$v){
-			$tmp=explode('_', $k);
-			$tmp=explode('id',$tmp[2]);
-			$tmp=$tmp[0];$tmp=M($tmp);
-			$this->assign($k,$tmp->select());
-		}
 
-		return createarrok('ok',$mo,'',$info);
-	}
 
-	public function doupdate($mdmk,$get){
-		$info=collectinfo(__METHOD__,'$mdmk,$get',array($mdmk,$get));
-		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
-		if(isset($get)===false){return createarrerr('error_code','get 不能为空',$info);}//防止NULL
-		
-		$lowmdmk=strtolower($mdmk);
-		$m=M($lowmdmk);
-		$mid=$lowmdmk.'id';
-		
-		$id=$get[$mid];
-		unset($get[$mid]);
-		unset($get['_URL_']);
-
-		if($id==0){
-			//add
-			$m->data($get)->add();
-			$pattern=0;
-		}else{
-			$m->where($mid.'='.$id)->setField($get);
-			$pattern=1;
-		}
-		
-
-		return createarrok('ok',$pattern,'',$info);
-	}
-
-	###
-	public function dodelete($mdmk,$id){
-		$info=collectinfo(__METHOD__,'$mdmk,$id',array($mdmk,$id));
-
-		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
-		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
-
-		$lowmdmk=strtolower($mdmk);
-		$m=M($lowmdmk);
-		$mid=$lowmdmk.'id';
-
-		$m->where($mid.'='.$id)->delete();
-
-		return createarrok('ok',$data,'',$info);
-	}
+	
 
 } 
 ?>
