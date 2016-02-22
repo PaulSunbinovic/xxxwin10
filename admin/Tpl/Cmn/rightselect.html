@@ -44,7 +44,15 @@
                 <option value="">无</option>
                 <volist name='$key' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
               </select>
-              <?php }else{ ?><input class='cdt' id='{$key}_nb_cdt'><?php } ?>
+              <?php }else if(isset($transmean[$key])==true){ ?>
+              <select class='cdt' id='{$key}_nb_cdt'>
+                <option value="">无</option>
+                <?php foreach ($transmean[$key] as $tk => $tv){ ?>
+                <option value='{$tk}'>{$tv}</option>
+                <?php } ?>
+              </select>
+              <?php }else{ ?>
+              <input class='cdt' id='{$key}_nb_cdt'><?php } ?>
               </div>
               <?php
                 }

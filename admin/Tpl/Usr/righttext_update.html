@@ -13,22 +13,62 @@
 					if(!in_array($k, $no_update)){
 			 ?>
 			<tr><td>{$v}</td><td>
-			<?php if(strstr($k, '_')){ ?>
-			<select id='{$k}'>
-				<option value=''>无</option>
-				<?php //处理萃取下主题
-                  $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
-                ?>
-				<volist name='$k' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
-			</select>
-			<?php }else if(isset($transmean[$k])){ ?>
-			<select id='{$k}'>
-				<?php foreach($transmean[$k] as $v=>$dsc){ ?>
-				<option value="{$v}">{$dsc}</option>
-				<?php } ?>
-			</select>
+			<?php if($k=='usrpt'){ ?>
+				<!-- pt start -->
+				<link rel="stylesheet" type="text/css" href="__PUBLIC__/etc/huploadify/html5uploader.css"/>
+				<script type="text/javascript" src="__PUBLIC__/etc/huploadify/jquery.html5uploader.js"></script>
+				<script>var dogivetail='__APP__/Hupldf/dogivetail'</script>
+		   		<script type="text/javascript">
+				$(function(){
+					$('#upload').html5uploader({
+						fileTypeExts:'image/jpeg,image/png',
+						auto:true,
+						multi:false,
+						removeTimeout:0,
+						url:'__APP__/Hupldf/upload/folder/usr',//
+						onUploadStart:function(){
+							//alert('开始上传');
+							var timestamp = (new Date()).valueOf();
+						},
+						onInit:function(){
+							//alert('初始化');
+						},
+						onUploadComplete:function(file){
+							//alert('上传完成');
+							$.post(
+								'__APP__/Hupldf/showphoto',
+								{},
+								function(data){
+									$('#imgg').attr('src',data.myfl);
+									$('input[name=pt]').val(data.myfl);
+								},
+								'json'
+							);
+						}
+					});
+				});
+				</script>
+				<div><img src="{$mo['usrpt']}" class='thumbnail' style='width:80px;height:80px' id='imgg' /><input type='hidden' id='{$k}' name='pt'/></div>
+				<div id="upload"></div>
+			    <!-- pt over -->
 			<?php }else{ ?>
-			<input id='{$k}'>
+				<?php if(strstr($k, '_')){ ?>
+				<select id='{$k}'>
+					<option value=''>无</option>
+					<?php //处理萃取下主题
+	                  $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
+	                ?>
+					<volist name='$k' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
+				</select>
+				<?php }else if(isset($transmean[$k])){ ?>
+				<select id='{$k}'>
+					<?php foreach($transmean[$k] as $v=>$dsc){ ?>
+					<option value="{$v}">{$dsc}</option>
+					<?php } ?>
+				</select>
+				<?php }else{ ?>
+				<input id='{$k}'>
+				<?php } ?>
 			<?php } ?>
 			<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
 			</td></tr>
@@ -56,7 +96,16 @@ origindata["{$k}"]="{$mo[$k]}";
 	}
 } 
 ?>
-
+//zabojin的属性里面不用管的，也不用显示的
+var no_update=new Array();
+<?php 
+foreach($no_update as $nuv){ 
+?>
+no_update.push("{$nuv}");
+<?php 
+} 
+?>
+//zabojin的属性里面在显示中，允许空的
 var allowempty=new Array();
 <?php 
 foreach($allowempty as $aev){ 
@@ -105,6 +154,7 @@ $(function(){
 				}
 			}
 		}
+
 		
 
 		$.ajax({

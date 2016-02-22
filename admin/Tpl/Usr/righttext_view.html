@@ -7,7 +7,11 @@
 			<?php foreach($para as $k=>$v){
 					if(!in_array($k, $no_view)){
 			 ?>
-			 <tr><td>{$para[$k]}</td><td>{$mo[$k]}</td></tr>
+			<?php if($k=='usrpt'){ ?>
+			 <tr><td>{$para[$k]}</td><td><img class='img-circle' style='height: 70px;width: 70px' src='{$mo[$k]}'></td></tr>
+			<?php }else{ ?>
+			<tr><td>{$para[$k]}</td><td>{$mo[$k]}</td></tr>
+			<?php } ?>
 			<?php }
 			} ?>
 		</tbody>

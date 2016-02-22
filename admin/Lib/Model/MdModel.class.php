@@ -25,5 +25,15 @@ class MdModel extends Action{
 
 		return createarrok('ok',$mdo,'',$info);
 	}
+	####
+	public function deletemdlsbylbid($lbid){
+		$info=collectinfo(__METHOD__,'$lbid',array($lbid));
+		if(isset($lbid)===false){return createarrerr('error_code','lbid 不能为空',$info);}//防止NULL
+		
+		$md=M('md');
+		$md->where('f_md_lbid='.$lbid)->delete();
+
+		return createarrok('ok',$data,'',$info);
+	}
 } 
 ?>

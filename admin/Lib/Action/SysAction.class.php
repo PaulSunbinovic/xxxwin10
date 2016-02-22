@@ -1,25 +1,25 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-class AaAction extends Action {
+class SysAction extends Action {
 
 	
 	//预设  para一般自身的所有以及扩展的zabojingua东西
 	//聚合
     private $all=array(
-    	'mdmk'=>'Aa',//NB
-  		'ttl'=>'aa测试',
-  		'jn'=>array('tb_bb ON f_aa_bbid=bbid'),//NB
+    	'mdmk'=>'Sys',//NB
+  		'ttl'=>'系统选项',
+  		'jn'=>array(''),//NB
       //自己的全部+f的显示的东西
-  		'para'=>array('aaid'=>'aaID','aanm'=>'aa名称','f_aa_bbid'=>'bb名称','bbnm'=>'bb名称','aastat'=>'aa状态'),//NB
+  		'para'=>array('sysid'=>'sysID','sysnm'=>'系统名称','sysip'=>'系统IP'),//NB
   		//抛去不是zabojin的属性针对para
-      'notself'=>array('bbnm'),
+      'notself'=>array(),
        ##########modify 添加修改中不需要展示和理会的属性 针对para
-      'no_update'=>array('aaid','bbnm'),
+      'no_update'=>array('sysid'),
       #####update的时候允许为空的值 针对zabojin刨掉不然显示的update字段后
-      'allowempty'=>array('aanm'),
+      'allowempty'=>array(),
 
-      'hide_fld'=>array('aaid','f_aa_bbid'),//NB
-      'hide_cdt'=>array('aaid','bbnm'),//NB
+      'hide_fld'=>array('sysid'),//NB
+      'hide_cdt'=>array('sysid'),//NB
   		
     //   'spccdtls'=>array('spccdt_0'=>array('aaid<>0','aaID不为0【废话只是测试】')),
   		// 'odrls'=>array('aanm'),
@@ -31,21 +31,21 @@ class AaAction extends Action {
       'spccdt_dflt'=>array(),//NB
       'odr_dflt'=>array(),//NB
       //hide的fld必须有，他们虽然不显示但是必须选择，这样才能在第一次进入query的时候，隐藏属性可以被调用，特别是id和fid
-  		'fld_dflt'=>array('aaid','aanm','bbnm','f_aa_bbid','aastat'),//NB
-  		'cdt_dflt'=>array('aanm'=>'a',),//NB
+  		'fld_dflt'=>array('sysid','sysnm','sysip'),//NB
+  		'cdt_dflt'=>array(),//NB
   		
   		'lmt_dflt'=>10,//NB
   		
   		'defaultls'=>1,//默认枚举//NB
   		##########view
-  		'no_view'=>array('aaid','f_aa_bbid'),
+  		'no_view'=>array('sysid'),
 	   
       #########删除提醒
       'deleteconfirm'=>'确定要删除此条记录？',
       #####转义
-      'transmean'=>array('aastat'=>array('0'=>'否','1'=>'是')),//NB
+      'transmean'=>array(),//NB
       #####默认值
-      'dfltvalue'=>array('aanm'=>'a','aastat'=>0),
+      'dfltvalue'=>array(),
       
     	);
 

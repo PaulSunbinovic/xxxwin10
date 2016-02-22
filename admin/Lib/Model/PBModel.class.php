@@ -22,6 +22,8 @@ class PBModel extends Action{
 		$odrls=$all['odrls'];
 		//采用公版为默认显示ls（针对筛选里的ls）
 		$defaultls=$all['defaultls'];
+		//查看是否有转义
+		$transmean=$all['transmean'];
 		
 		//NB搜索
 		$arr_get=$nb->processget($_GET);$get=$arr_get['data'];
@@ -34,10 +36,25 @@ class PBModel extends Action{
     	if(!$get['fld']){$lmt=$all['lmt_dflt'];}else{$lmt=$get['lmt'];}
     	##############有的时候hide_fld和hide_cdt不一样的
     	$hide_fld=$all['hide_fld'];$hide_cdt=$all['hide_cdt'];
-    	$arr=$nb->getls($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls);
+
+    	$arr=$nb->getls($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls,$transmean);
     	$mls=$arr['data'];
+
+    	//转义
+    	$mlsnw=array();
+		foreach($mls as $mv){
+			foreach($transmean as $tk=>$tv){
+				//完全为空意味着fld里头没有这个东西，这个东西必须有值，没有值就说明没有这个东西，fld里头没有，因此也就不需要转义，只有不设置才需要转义（PS：空和不设置是不同 的概念）
+				if(isset($mv[$tk])==true){
+					$mv[$tk]=$tv[$mv[$tk]];
+				}
+			}
+			array_push($mlsnw, $mv);
+		}
     	
-		$this->assign('mls',$arr['data']);
+		$this->assign('mls',$mlsnw);
+
+		$this->assign('deleteconfirm',$all['deleteconfirm']);
 
 		$this->assign('ttl',$all['ttl']);
 		
@@ -55,7 +72,7 @@ class PBModel extends Action{
 		$m=M($lowmdmk);
 		foreach($jn as $jnv){$m->join($jnv);}
 		$mo=$m->where($lowmdmk.'id='.$id)->find();
-		
+		 
 		return createarrok('ok',$mo,'',$info);
 	}
 	#########
@@ -77,6 +94,13 @@ class PBModel extends Action{
 
 
     	$arr_mo=$this->getmo($mdmk,$id,$para,$jn);$mo=$arr_mo['data'];
+
+    	$transmean=$all['transmean'];
+    	foreach($mo as $k=>$v){
+    		if(isset($transmean[$k])){
+    			$mo[$k]=$transmean[$k][$mo[$k]];
+    		}
+    	}
     	
     	$this->assign('mo',$mo);
     	$this->assign('ttl',$mo[$lowmdmk.'nm']);
@@ -93,6 +117,7 @@ class PBModel extends Action{
     	$mdmk=$all['mdmk'];
     	$lowmdmk=strtolower($mdmk);$this->assign('lowmdmk',$lowmdmk);
     	$notself=$all['notself'];$this->assign('notself',$notself);
+    	$transmean=$all['transmean'];$this->assign('transmean',$transmean);
 
 
     	$arr_usross=$environment->setenvironment($mdmk);$usross=$arr_usross['data'];
@@ -101,6 +126,8 @@ class PBModel extends Action{
     	$para=$all['para'];$this->assign('para',$para);
     	$jn=$all['jn'];
     	$no_update=$all['no_update'];$this->assign('no_update',$no_update);
+    	$dfltvalue=$all['dfltvalue'];
+    	$allowempty=$all['allowempty'];$this->assign('allowempty',$allowempty);
 
     	//甭管添加还是修改 zabojingua 属性必须要ls给好
     	foreach($para as $k=>$v){
@@ -110,9 +137,12 @@ class PBModel extends Action{
 				$tmp=$tmp[0];$tmp=M($tmp);
 				$this->assign($k,$tmp->select());
 			}
+			if(isset($transmean[$k])){
+				$this->assign($k,$transmean[$k]);
+			}
 		}
 
-    	if($id==0){$mo=array();$pattern='添加';}else{
+    	if($id==0){$mo=$dfltvalue;$pattern='添加';}else{
     		$arr_mo=$this->getmo($mdmk,$id,$para,$jn);$mo=$arr_mo['data'];$pattern='修改';
     	}
     	

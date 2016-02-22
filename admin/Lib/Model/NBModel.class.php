@@ -3,8 +3,8 @@ class NBModel extends Action{
 	//test
 	//
 	//############test
-	public function getls($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls){
-		$info=collectinfo(__METHOD__,'$para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls',array($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls));
+	public function getls($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls,$transmean){
+		$info=collectinfo(__METHOD__,'$para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls,$transmean',array($para,$mdmk,$jn,$fld,$cdt,$spccdt,$odr,$lmt,$hide_fld,$hide_cdt,$spccdtls,$odrls,$defaultls,$transmean));
 
 		if(isset($para)===false){return createarrerr('error_code','para 不能为空',$info);}
 		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}
@@ -17,7 +17,7 @@ class NBModel extends Action{
 		if(isset($hide_fld)===false){return createarrerr('error_code','hide_fld 不能为空',$info);}
 		if(isset($hide_cdt)===false){return createarrerr('error_code','hide_cdt 不能为空',$info);}
 
-		$this->assign('para',$para);$this->assign('mdmk',$mdmk);$this->assign('fld',$fld);$this->assign('cdt',$cdt);$this->assign('odr',$odr);$this->assign('spccdt',$spccdt);$this->assign('lmt',$lmt);$this->assign('hide_fld',$hide_fld);$this->assign('hide_cdt',$hide_cdt);$this->assign('spccdtls',$spccdtls);$this->assign('odrls',$odrls);$this->assign('lowmdmk',strtolower($mdmk)); 
+		$this->assign('para',$para);$this->assign('mdmk',$mdmk);$this->assign('fld',$fld);$this->assign('cdt',$cdt);$this->assign('odr',$odr);$this->assign('spccdt',$spccdt);$this->assign('lmt',$lmt);$this->assign('hide_fld',$hide_fld);$this->assign('hide_cdt',$hide_cdt);$this->assign('spccdtls',$spccdtls);$this->assign('odrls',$odrls);$this->assign('lowmdmk',strtolower($mdmk)); $this->assign('defaultls',$defaultls);$this->assign('transmean',$transmean);
 
 
 		
@@ -47,10 +47,14 @@ class NBModel extends Action{
 		}
 
 		foreach($cdt as $cdtvk=>$cdtvv){
-			if(strstr($cdtvk,'_')){$thiscdt=$cdtvk.'='.$cdtvv;}else{$thiscdt=$cdtvk." LIKE '%".$cdtvv."%'";}
+			if(strstr($cdtvk,'_')){
+				$thiscdt=$cdtvk.'='.$cdtvv;
+			}else if(isset($transmean[$cdtvk])){
+				$thiscdt=$cdtvk.'='.$cdtvv;
+			}else{$thiscdt=$cdtvk." LIKE '%".$cdtvv."%'";}
 			$cdt_str=$cdt_str.' AND '.$thiscdt;
 		}
-
+		//为防止没有spccdt依然会产生()因此如果没有就干脆不搞了，当然没有spccdtls 自然也不会设置spccdt 自然也不会有下面的数据了
 		if($spccdt){
 			foreach($spccdt as $spccdtv){$cdt_str=$cdt_str.' AND ('.$spccdtls[$spccdtv][0].') ';}
 		}
@@ -70,8 +74,14 @@ class NBModel extends Action{
 		$page->setConfig('theme','共%totalPage%页/%totalRow%%header% %first% %upPage%  %linkPage%  %downPage% %end%');
 		//设置分页回调方法
 		$show=$page->show();
-		$this->assign('page',$show);
+
+		$show=str_replace("<a>", "&nbsp;<a>", $show);
+		$show=str_replace("</a>", "</a>&nbsp;", $show);
+		$show=str_replace("<span>", "&nbsp;<span>", $show);
+		$show=str_replace("</span>", "</span>&nbsp;", $show);
 		
+		$this->assign('page',$show);
+		//为防止没有odr依然会产生()因此如果没有就干脆不搞了，当然没有odrls 自然也不会设置odr 自然也不会有下面的数据了
 		if($odr){
 			$odr_str='';
 			$i=0;foreach($odr as $odrvk=>$odrvv){if($i!=0){$odr_str=$odr_str.',';}$odr_str=$odr_str.$odrvk.' '.$odrvv;$i++;}
@@ -119,6 +129,7 @@ class NBModel extends Action{
 				$k=explode('_nb_cdt', $key)[0];
 				$arr_cdt[$k]=$value;
 			}
+				
 			//spccdt
 			if(strstr($key,'nb_spccdt')){
 				array_push($arr_spccdt,$value);

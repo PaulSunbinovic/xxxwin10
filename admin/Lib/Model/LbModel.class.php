@@ -32,5 +32,19 @@ class LbModel extends Action{
 
 		return createarrok('ok',$mdo,'',$info);
 	}
+	#####
+	public function dodelete($lbid){
+		$info=collectinfo(__METHOD__,'$lbid',array($lbid));
+		if(isset($lbid)===false){return createarrerr('error_code','lbid 不能为空',$info);}//防止NULL
+		
+		//首先把相关的md都删咯
+		$md=D('Md');
+		$md->deletemdlsbylbid($lbid);
+
+		$lb=M('lb');
+		$lb->where('lbid='.$lbid)->delete();
+
+		return createarrok('ok',$data,'',$info);
+	}
 } 
 ?>

@@ -7,24 +7,31 @@ class LbAction extends Action {
 	//聚合
     private $all=array(
     	'mdmk'=>'Lb',
-		'ttl'=>'大类',
-		'jn'=>array(),
-		'para'=>array('lbid'=>'列表ID','lbnm'=>'列表名称','lbodr'=>'列表顺序'),
-		'notself'=>array(),
-		'spccdtls'=>array('spccdt_0'=>array('lbid<>0','列表ID不为0【废话只是测试】')),
-		'odrls'=>array('lbodr'),
-		'fld_dflt'=>array('lbid','lbnm','lbodr'),
-		'cdt_dflt'=>array('lbnm'=>'类',),
-		'spccdt_dflt'=>array('spccdt_0'),
-		'odr_dflt'=>array('lbodr'=>'ASC'),
-		'lmt_dflt'=>10,
-		'hide_cdt'=>array('lbid'),
-		'hide_fld'=>array('lbid'),
-		'defaultls'=>1,
-		##########view
-		'no_view'=>array('lbid'),
-	    ##########modify
+  		'ttl'=>'大类',
+  		'jn'=>array(),
+  		'para'=>array('lbid'=>'列表ID','lbnm'=>'列表名称','lbodr'=>'列表顺序'),
+  		'notself'=>array(),
+  		'spccdtls'=>array('spccdt_0'=>array('lbid<>0','列表ID不为0【废话只是测试】')),
+  		'odrls'=>array('lbodr'),
+  		'fld_dflt'=>array('lbid','lbnm','lbodr'),
+  		'cdt_dflt'=>array('lbnm'=>'类',),
+  		'spccdt_dflt'=>array('spccdt_0'),
+  		'odr_dflt'=>array('lbodr'=>'ASC'),
+  		'lmt_dflt'=>10,
+  		'hide_cdt'=>array('lbid'),
+  		'hide_fld'=>array('lbid'),
+  		'defaultls'=>1,
+  		##########view
+  		'no_view'=>array('lbid'),
+  	    ##########modify
 	    'no_update'=>array('lbid'),
+      'deleteconfirm'=>'删除改记录同时会删除该大类下属的模块，确定删除么？',
+      #####转义
+      'transmean'=>array(),
+      #####默认值
+      'dfltvalue'=>array(),
+      #####update的时候允许为空的值
+      'allowempty'=>array(),
 
     	);
 
@@ -42,7 +49,7 @@ class LbAction extends Action {
     	header("Content-Type:text/html; charset=utf-8");
     	$pb=D('PB');
     	$pb->view($this->all);
-		$this->display('Cmn:view');
+		  $this->display('Cmn:view');
     }
    
    	//公版
@@ -50,7 +57,7 @@ class LbAction extends Action {
    		header("Content-Type:text/html; charset=utf-8");
     	$pb=D('PB');
     	$pb->update($this->all);
-		$this->display('Cmn:update');
+		  $this->display('Cmn:update');
    	}
 
    	//公版
@@ -66,8 +73,8 @@ class LbAction extends Action {
    	//公版
    	public function dodelete(){
    		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
-   		$pb->dodelete($this->all);
+   		$lb=D('Lb');
+   		$lb->dodelete($_GET['id']);
   		
    		$this->ajaxReturn($data,'json');
    	}

@@ -65,6 +65,42 @@ class UsrModel{
 	
 	}
 
+	//############test
+	public function add($get){
+		$info=collectinfo(__METHOD__,'$get',array($get));
+		if(isset($get)===false){return createarrerr('error_code','get 不能为空',$info);}//防止NULL
+		
+		$usr=M('usr');
+		$usr->data($get)->add();
+
+		return createarrok('ok',$data,'',$info);
+	}
+
+	//############test
+	public function mdf($get,$id){
+		$info=collectinfo(__METHOD__,'$get,$id',array($get,$id));
+		if(isset($get)===false){return createarrerr('error_code','get 不能为空',$info);}//防止NULL
+		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
+
+		$usr=M('usr');
+		$usr->where('usrid='.$id)->setField($get);
+
+		return createarrok('ok',$data,'',$info);
+	}
+
+	//############test
+	public function resetusrpw($id){
+		$info=collectinfo(__METHOD__,'',array());
+		
+		$usr=M('usr');
+
+		$data=array('usrpw'=>md5('11111111'));
+		$usr->where('usrid='.$id)->setField($data);
+
+		$msg='重置成功';
+
+		return createarrok('ok',$data,$msg,$info);
+	}
 
 } 
 ?>
