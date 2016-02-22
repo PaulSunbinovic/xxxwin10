@@ -1,0 +1,75 @@
+<script>
+	var dodelete='__URL__/dodelete';
+	var domove='__URL__/domove';
+</script>
+<!--table部分-->
+<div class='col-md-12' style='padding-top: 30px;'>
+	<!--开始-->
+	<link rel="stylesheet" href="__PUBLIC__/etc/tree/tree.css" type="text/css" />
+	<script type='text/javascript' src='__PUBLIC__/etc/tree/tree.js'></script>
+	<div id='tree'>
+	{$tree}
+	
+	<p><a href='javascript:openall()' class='btn btn-success'>全部展开</a></p>
+	<p><a href='javascript:closeall()' class='btn btn-success'>全部收缩</a></p>
+	</div>
+	
+	<!-- Button to trigger modal -->
+	<a href="#myModal"  class="btn" data-toggle="modal" style='display:none' id='alrt'></a>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">位置</h4>
+	      </div>
+	      <div class="modal-body" id='treepos'>
+	        <input type='hidden' name='mvid'/>
+			{$treepos}
+			<p><a href='javascript:openallpos()' class='btn btn-success'>全部展开</a></p>
+			<p><a href='javascript:closeallpos()' class='btn btn-success'>全部收缩</a></p>
+		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	
+	<p><a href='__URL__/query' class='btn btn-primary'>进入浏览模式</a></p>
+	<!--结束-->
+	
+</div>
+
+<script type="text/javascript">
+function mvhr(pid,pos){
+	if(confirm('确定移至此位，其子嗣节点也会相应移位')){
+		var mvid=$('input[name=mvid]');
+		var id=mvid.val();
+		$.ajax({
+            'type': 'GET',
+            'url':domove,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': {pid:pid,pos:pos,id:id},
+            'dataType': 'json',
+            'success': function(data) {
+            	alert('转移成功');
+				window.location.reload();
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+		
+	}
+
+}
+</script>

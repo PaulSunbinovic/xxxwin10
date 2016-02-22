@@ -2,160 +2,122 @@
 
 //规矩：需要display的 就m mls 不需要的 只要uo uls 之类，方便批量移植
 class GrpAction extends Action{
-	function gtxpg(){
-		
-		//先给hd设置好些东西，他自身是无法提取的
-		import('@.SS.SSAction');
-		$ss = new SSAction();
-		$ss->setss();
-		
-		$x=$_GET['x'];
-		
-		//鉴权 如果OK的就正常显示，或者出现查看神马的，否则就呵呵了,query he gtxpg两处
-		$mdII=M('md');
-		$mdo=$mdII->where("mdmk='Grp'")->find();
-		import('@.IDTATH.IdtathAction');
-		$Idtath = new IdtathAction();
-		$athofn=$Idtath->identify($mdo['mdid'],$x);
-		
-		import('@.NTF.NTFAction');
-		$ntf = new NTFAction();
-		$ntf->setntf();
-		
-		import('@.KZMB.KZMBAction');
-		$kzmb = new KZMBAction();
-		$kzmb->setkzmb($mdo['mdid']);
-		
-		if($x=='vw'){
-			$grpid=$_GET['grpid'];
-			$grp=M('grp');
-			$mo=$grp->where("grpid=".$grpid)->find();
-			$this->assign('mo',$mo);
-			$this->assign('title','查看');
-			$this->assign('theme','查看详细');
-			$this->display('view');
-		}else if($x=='updt'){
-			$grpid=$_GET['id'];
-			$grp=M('grp');
-			if($grpid==0){
-				$mo['grpid']=0;
-				$mo['grppid']=$_GET['pid'];
-				$mo['grpodr']=$_GET['odr'];
-				$this->assign('title','添加');
-				$this->assign('theme','添加：');
-				$this->assign('btnvl','添加');
-			}else{
-				$mo=$grp->where("grpid=".$grpid)->find();
-				$this->assign('title','修改');
-				$this->assign('theme','修改：');
-				$this->assign('btnvl','修改');
-			}
-			$this->assign('mo',$mo);
-			
-			$this->display('update');
-		}else if($x=='edit'){
-			header("Content-Type:text/html; charset=utf-8");
-			
-			import('@.TREE.TreeAction');
-			$tree = new TreeAction();
-			$grp=M('grp');
-			$grpls=$grp->order('grpodr ASC')->select();//在按照这个顺序前提下，总体永远是1在上2在下
-			
-			$str=$tree->unlimitedForListPlus($grpls,0,'grpid','grpnm','grppid','grpodr',__URL__,'Grp');
-			$strpos=$tree->unlimitedForListMv($grpls,0,'grpid','grpnm','grppid','grpodr');
-			//p($str);die;
-			//q特殊
-			$this->assign('tree',$str);
-			$this->assign('treepos',$strpos);
-			$this->assign('title','浏览团队列表（编辑模式）');
-			$this->assign('theme','团队管理（编辑模式）');
-			
-			$this->display('edit');
-		}
+
+	//预设  para一般自身的所有以及扩展的zabojingua东西
+	//聚合
+    private $all=array(
+    	'mdmk'=>'Grp',//NB
+  		'ttl'=>'团队',
+  		'jn'=>array(),//NB
+     	 //自己的全部+f的显示的东西
+  		'para'=>array('grpid'=>'grpID','grpnm'=>'团队名称','grppid'=>'grpPID','grpodr'=>'顺序'),//NB
+  		//抛去不是zabojin的属性针对para
+      'notself'=>array(),
+       ##########modify 添加修改中不需要展示和理会的属性 针对para
+      'no_update'=>array('grpid','grppid','grpodr'),
+      #####update的时候允许为空的值 针对zabojin刨掉不然显示的update字段后
+      'allowempty'=>array(),
+
+      'hide_fld'=>array('grpid'),//NB
+      'hide_cdt'=>array('grpid'),//NB
+  		
+    //   'spccdtls'=>array('spccdt_0'=>array('aaid<>0','aaID不为0【废话只是测试】')),
+  		// 'odrls'=>array('aanm'),
+    //   'spccdt_dflt'=>array('spccdt_0'),
+    //   'odr_dflt'=>array('aanm'=>'ASC'),
+
+      'spccdtls'=>array(),//NB
+      'odrls'=>array(),//NB
+      'spccdt_dflt'=>array(),//NB
+      'odr_dflt'=>array(),//NB
+      //hide的fld必须有，他们虽然不显示但是必须选择，这样才能在第一次进入query的时候，隐藏属性可以被调用，特别是id和fid
+  		'fld_dflt'=>array('grpid','grpnm','grppid','grpodr'),//NB
+  		'cdt_dflt'=>array(),//NB
+  		
+  		'lmt_dflt'=>10,//NB
+  		
+  		'defaultls'=>1,//默认枚举//NB
+  		##########view
+  		'no_view'=>array('grpid'),
+	   
+      #########删除提醒
+      'deleteconfirm'=>'删除该团队将会把其子团队递归删除',
+      #####转义
+      'transmean'=>array(),//NB
+      #####默认值
+      'dfltvalue'=>array(),
+      
+    	);
+
 	
-	
-	}
 	
 	public function query(){
 		header("Content-Type:text/html; charset=utf-8");
-		
-		//先给hd设置好些东西，他自身是无法提取的
-		import('@.SS.SSAction');
-		$ss = new SSAction();
-		$ss->setss();
-		
-		//鉴权 如果OK的就正常显示，或者出现查看神马的，否则就呵呵了,query he gtxpg两处
-		$mdII=M('md');
-		$mdo=$mdII->where("mdmk='Grp'")->find();
-		import('@.IDTATH.IdtathAction');
-		$Idtath = new IdtathAction();
-		$athofn=$Idtath->identify($mdo['mdid'],'qry');
-		
-		import('@.NTF.NTFAction');
-		$ntf = new NTFAction();
-		$ntf->setntf();
+		$environment=D('Environment');$tree=D('Tree');$grp=D('Grp');
 
-		import('@.KZMB.KZMBAction');
-		$kzmb = new KZMBAction();
-		$kzmb->setkzmb($mdo['mdid']);
+		$all=$this->all;$mdmk=$all['mdmk'];
+
+		$arr_usross=$environment->setenvironment($mdmk);$usross=$arr_usross['data'];
 		
-		import('@.TREE.TreeAction');
-		$tree = new TreeAction();
-		$grp=M('grp');
-		$grpls=$grp->order('grpodr ASC')->select();//在按照这个顺序前提下，使用tree方法就能有序的得到
-		
+		$arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
+
 		$str=$tree->unlimitedForList($grpls,0,'grpid','grpnm','grppid','grpodr');
+
 		$this->assign('tree',$str);
 		
-		$this->assign('title','浏览团队列表');
-		$this->assign('theme','团队管理');
-
+		$this->assign('ttl',$all['ttl']);
 		$this->display('query');
 	}
 	
-	function update(){
+
+	public function edit(){
 		header("Content-Type:text/html; charset=utf-8");
-		$grpid=$_POST['grpid'];
-	
-		if($grpid==0){
-			$grp=M('grp');
-			//先截获数据
-			$data=array(
-				'grpnm'=>$_POST['grpnm'],
-				'grppid'=>$_POST['grppid'],
-				'grpodr'=>$_POST['grpodr'],
-			);
-					
-			if($grp->data($data)->add()){
-				$data['status']=1;
-				$this->ajaxReturn($data,'json');
-			}else{
-				$data['status']=2;
-				$this->ajaxReturn($data,'json');
-			}
-			
-		}else{
-			$grp=M('grp');
-			//先截获数据
-			
-			$data=array(
-				'grpnm'=>$_POST['grpnm'],
-				'grppid'=>$_POST['grppid'],
-				'grpodr'=>$_POST['grpodr'],
-			);
-			
-			
-			if($grp->where('grpid='.$grpid)->setField($data)){
-				$data['status']=1;
-				$this->ajaxReturn($data,'json');
-			}else{
-				$data['status']=2;
-				$this->ajaxReturn($data,'json');
-			}
-			
-		}
+		$environment=D('Environment');$tree=D('Tree');$grp=D('Grp');
+
+		$all=$this->all;$mdmk=$all['mdmk'];
+
+		$arr_usross=$environment->setenvironment($mdmk);$usross=$arr_usross['data'];
+		
+		$arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
+
+		$str=$tree->unlimitedForListPlus($grpls,0,'grpid','grpnm','grppid','grpodr',__URL__,'Grp');
+		$strpos=$tree->unlimitedForListMv($grpls,0,'grpid','grpnm','grppid','grpodr');
+
+		//q特殊
+		$this->assign('tree',$str);
+		$this->assign('treepos',$strpos);
+		
+		$this->assign('ttl',$all['ttl']);
+		$this->display('edit');
 	}
-	
+
+	//定制
+   	public function update(){
+   		header("Content-Type:text/html; charset=utf-8");
+    	$pb=D('PB');
+    	$pb->update($this->all);
+    	//定制s
+    	$this->assign('pid',$_GET['pid']);
+    	$this->assign('odr',$_GET['odr']);
+    	//定制o
+    	
+		$this->display('update');
+   	}
+
+   	//公版
+   	public function doupdate(){
+   		header("Content-Type:text/html; charset=utf-8");
+   		$pb=D('PB');
+   		$arr_pattern=$pb->doupdate($this->all);
+   		$data['pattern']=$arr_pattern['pattern'];
+
+   		$this->ajaxReturn($data,'json');
+   	}
+
+
+   	public function domove(){
+   		
+   	}
 	function move(){
 		$pid=$_POST['pid'];
 		$pos=$_POST['pos'];

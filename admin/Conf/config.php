@@ -9,6 +9,8 @@ $urlprx='http://'.$host.'/'.$prjct;
 //####
 C('PUBLIC','/'.$prjct.'/Public');
 C('HOST',$urlprx);
+C('IP',$host);
+C('PROJECT',$prjct);
 
 C('URL','http://'.$host.'/'.$tmp[1].'/'.$tmp[2]);
 

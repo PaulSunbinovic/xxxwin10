@@ -3,7 +3,7 @@ class SysModel extends Action{
 	//test
 	//
 	//############test
-	public function get($id){
+	public function getmo($id){
 		$info=collectinfo(__METHOD__,'$id',array($id));
 		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
 		

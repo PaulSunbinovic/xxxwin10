@@ -32,9 +32,7 @@ class HupldfAction extends Action{
 			);
 			//设置图片信息到数据库
 				
-			$arr_syso=$sys->get(1);
-			$syso=$arr_syso['data'];
-			session('myfl','/'.$syso['sysnm'].'/Uploads/'.$folder.'/'.$nwflnm);
+			session('myfl','/'.C('PROJECT').'/Uploads/'.$folder.'/'.$nwflnm);
 			
 			exit();
 		}

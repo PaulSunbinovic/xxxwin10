@@ -34,6 +34,13 @@
 			</td></tr>
 			<?php }
 			} ?>
+			<!--定制部分s-->
+			<?php if($id==0){ ?>
+			<tr><td>父节点id（不可更改）</td><td><input id='grppid' value="{$pid}" readonly></td></tr>
+			<tr><td>顺序（不可更改）</td><td><input id='grpodr' value="{$odr}" readonly></td></tr>
+			<?php } ?>
+			
+			<!--定制部分o-->
 		</tbody>
 	</table>
 	<a class='btn btn-primary' id='update'><?php if($id==0){ ?>添加<?php }else{ ?>修改<?php } ?></a>
@@ -114,6 +121,10 @@ $(function(){
 					obj[key]=valuenow;
 				}
 			}
+			//dingzhis
+			obj['grppid']=$('#grppid').val();
+			obj['grpodr']=$('#grpodr').val();
+			//dingzhio
 		}
 		
 

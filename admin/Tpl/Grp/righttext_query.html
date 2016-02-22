@@ -1,0 +1,19 @@
+<script>
+	var dodelete='__URL__/dodelete';
+</script>
+<!--table部分-->
+<div class='col-md-12' style='padding-top: 30px;'>
+	<!--开始-->
+	<link rel="stylesheet" href="__PUBLIC__/etc/tree/tree.css" type="text/css" />
+	<script type='text/javascript' src='__PUBLIC__/etc/tree/tree.js'></script>
+	<div id='tree'>
+	{$tree}
+	</div>
+	<p><a href='javascript:openall()' class='btn btn-success'>全部展开</a></p>
+	<p><a href='javascript:closeall()' class='btn btn-success'>全部收缩</a></p>
+	<?php if($atho['athm']){ ?><p><a href='__URL__/edit' class='btn btn-primary'>进入编辑模式</a></p><?php } ?> 
+	<!--结束-->
+	
+</div>
+
+
