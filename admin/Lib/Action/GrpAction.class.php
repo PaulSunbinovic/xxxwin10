@@ -41,7 +41,7 @@ class GrpAction extends Action{
   		'no_view'=>array('grpid'),
 	   
       #########删除提醒
-      'deleteconfirm'=>'删除该团队将会把其子团队递归删除，同时依附此团队的用户将无所依，依附这个团队的权限也将消失，用户的相应的权限也将消失',
+      'deleteconfirm'=>'删除该团队将会把其子团队递归删除，同时依附于他的rl角色也将被删除',
       #####转义
       'transmean'=>array(),//NB
       #####默认值
@@ -131,6 +131,9 @@ class GrpAction extends Action{
 	}
 	
 	function dodelete(){
+
+
+		$rl=D('Rl');
 		//先找出要删除的所有ID，然后一个个删
 		$grpid=$_POST['grpid'];
 		
@@ -187,6 +190,11 @@ class GrpAction extends Action{
 			}
 			
 		}
+		/////////删除他就有可能呢删除一排的grp，所以要对所有的grp对应的rl进行删除，斩草除根
+		$grpid=$_GET['id'];
+		//删除角色会导致usrrl相应的数据删除
+      	$rl->deletebygrpid($grpid);
+
 		$this->ajaxReturn($data,'json');
 		
 	}

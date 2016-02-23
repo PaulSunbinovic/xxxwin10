@@ -129,16 +129,19 @@ class PBModel extends Action{
     	$dfltvalue=$all['dfltvalue'];
     	$allowempty=$all['allowempty'];$this->assign('allowempty',$allowempty);
 
-    	//甭管添加还是修改 zabojingua 属性必须要ls给好
-    	foreach($para as $k=>$v){
-    		if(!in_array($k,$notself)){
-				$tmp=explode('_', $k);
-				$tmp=explode('id',$tmp[2]);
-				$tmp=$tmp[0];$tmp=M($tmp);
-				$this->assign($k,$tmp->select());
-			}
-			if(isset($transmean[$k])){
-				$this->assign($k,$transmean[$k]);
+    	$defaultls=$all['defaultls'];
+    	if($defaultls){
+	    	//甭管添加还是修改 zabojingua 属性必须要ls给好
+	    	foreach($para as $k=>$v){
+	    		if(!in_array($k,$notself)){
+					$tmp=explode('_', $k);
+					$tmp=explode('id',$tmp[2]);
+					$tmp=$tmp[0];$tmp=M($tmp);
+					$this->assign($k,$tmp->select());
+				}
+				if(isset($transmean[$k])){
+					$this->assign($k,$transmean[$k]);
+				}
 			}
 		}
 

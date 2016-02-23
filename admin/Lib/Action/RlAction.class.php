@@ -36,12 +36,12 @@ class RlAction extends Action {
   		
   		'lmt_dflt'=>10,//NB
   		
-  		'defaultls'=>0,//默认枚举//NB
+  		'defaultls'=>1,//默认枚举//NB
   		##########view
   		'no_view'=>array('rlid','f_rl_grpid'),
 	   
       #########删除提醒
-      'deleteconfirm'=>'删除角色将会使得依附该角色的用户失去工作？',
+      'deleteconfirm'=>'删除角色会导致usrrl相应的数据删除，同时权限里头也会删除相应的数据？',
       #####转义
       'transmean'=>array(),//NB
       #####默认值
@@ -55,7 +55,7 @@ class RlAction extends Action {
     	$pb=D('PB');$tree=D('Tree');$grp=D('Grp');
     	$pb->query($this->all);
       #dingzhis
-      #手动枚举
+      #手动枚举并覆盖
       $arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
       $arr=$tree->unlimitedForListSLCT($grpls,0,'grpid','grpnm','grppid','grpodr');
       $this->assign('f_rl_grpid',$arr);
@@ -80,23 +80,33 @@ class RlAction extends Action {
 		  $this->display('Cmn:update');
    	}
 
-   	//公版
-   	public function doupdate(){
-   		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
-   		$arr_pattern=$pb->doupdate($this->all);
-   		$data['pattern']=$arr_pattern['pattern'];
+   	//dingzhis
+    public function doupdate(){
+      header("Content-Type:text/html; charset=utf-8");
+      $pb=D('PB');$ath=D('Ath');
+      $arr_pattern=$pb->doupdate($this->all);
+      $data['pattern']=$arr_pattern['pattern'];
+      //dingzhis
+      //添加了角色必然会导致ath的增加
+      $rlid=$_GET['rlid'];
+      $ath->addbyrlid($rlid)
+      //dingzhio
+      $this->ajaxReturn($data,'json');
+    }
 
-   		$this->ajaxReturn($data,'json');
-   	}
-
-   	//公版
-   	public function dodelete(){
-   		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
-   		$pb->dodelete($this->all);
-  		
-   		$this->ajaxReturn($data,'json');
-   	}
+   	//dingzhi
+    public function dodelete(){
+      header("Content-Type:text/html; charset=utf-8");
+      $pb=D('PB');$ath=D('Ath');$usrrl=D('Usrrl');
+      $pb->dodelete($this->all);
+      //dingzhis
+      $rlid=$_GET['id'];
+      //删除角色会导致usrrl相应的数据删除
+      $usrrl->deletebyrlid($rlid);
+      //删除rl势必造成ath中的相应权限删除
+      $ath->deletebyrlid($rlid);
+      //dingzhio
+      $this->ajaxReturn($data,'json');
+    }
 
 }

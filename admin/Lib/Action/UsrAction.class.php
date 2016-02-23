@@ -34,7 +34,7 @@ class UsrAction extends Action {
         ##########modify//不用显示不用考虑的属性
         'no_update'=>array('usrid','usrpw','usraddtm','usrmdftm'),
         #########删除提醒
-        'deleteconfirm'=>'确定要删除此条记录？',
+        'deleteconfirm'=>'删除用户会导致usrrl相应的数据删除，确定？',
         #####转义
         'transmean'=>array('usrmk'=>array('0'=>'否','1'=>'是'),'usrps'=>array('0'=>'否','1'=>'是'),'usrvw'=>array('0'=>'否','1'=>'是')),
         #####默认值
@@ -96,13 +96,17 @@ class UsrAction extends Action {
         $this->ajaxReturn($data,'json');
     }
 
-    //公版
+    //dingzhi
     public function dodelete(){
-        header("Content-Type:text/html; charset=utf-8");
-        $pb=D('PB');
-        $pb->dodelete($this->all);
-        
-        $this->ajaxReturn($data,'json');
+      header("Content-Type:text/html; charset=utf-8");
+      $pb=D('PB');$usrrl=D('Usrrl');
+      $pb->dodelete($this->all);
+      //dingzhis
+      $usrid=$_GET['id'];
+      //删除用户会导致usrrl相应的数据删除
+      $usrrl->deletebyusrid($usrid);
+      //dingzhio
+      $this->ajaxReturn($data,'json');
     }
     
 	

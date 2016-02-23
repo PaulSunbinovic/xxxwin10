@@ -13,6 +13,16 @@ class RlModel extends Action{
 		return createarrok('ok',$rlls,'',$info);
 	}
 	
+	//############test
+	public function deletebygrpid($grpid){
+		$info=collectinfo(__METHOD__,'$grpid',array($grpid));
+		if(isset($grpid)===false){return createarrerr('error_code','grpid 不能为空',$info);}//防止NULL
+		
+		$rl=M('rl');
+		$rl->where('f_rl_grpid='.$grpid)->delete();
+
+		return createarrok('ok',$data,'',$info);
+	}
 
 } 
 ?>

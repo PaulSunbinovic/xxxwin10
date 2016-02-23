@@ -35,7 +35,7 @@ class MdAction extends Action {
 	    ##########modify
 	    'no_update'=>array('mdid','lbnm'),
       #########删除提醒
-      'deleteconfirm'=>'确定要删除此条记录？',
+      'deleteconfirm'=>'删除md势必造成ath中的相应权限删除？',
       #####转义
       'transmean'=>array(),
       #####默认值
@@ -70,22 +70,30 @@ class MdAction extends Action {
 		  $this->display('Cmn:update');
    	}
 
-   	//公版
+   	//dingzhi
    	public function doupdate(){
    		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
+   		$pb=D('PB');$ath=D('Ath');
    		$arr_pattern=$pb->doupdate($this->all);
    		$data['pattern']=$arr_pattern['pattern'];
-
+      //dingzhis
+      //添加了模块必然会导致ath的增加
+      $mdid=$_GET['mdid'];
+      $ath->addbymdid($mdid)
+      //dingzhio
    		$this->ajaxReturn($data,'json');
    	}
 
-   	//公版
+   	//dingzhi
    	public function dodelete(){
    		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
+   		$pb=D('PB');$ath=D('Ath');
    		$pb->dodelete($this->all);
-  		
+  		//dingzhis
+      //删除md势必造成ath中的相应权限删除
+      $mdid=$_GET['id'];
+      $ath->deletebymdid($mdid);
+      //dingzhio
    		$this->ajaxReturn($data,'json');
    	}
 
