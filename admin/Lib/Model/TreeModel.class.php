@@ -272,6 +272,23 @@ class TreeModel{
 			
 	}
 
+	//############test
+	public function paixu($pid,$lowmdmk){
+		$info=collectinfo(__METHOD__,'$pid,$lowmdmk',array($pid,$lowmdmk));
+		if(isset($pid)===false){return createarrerr('error_code','pid 不能为空',$info);}//防止NULL
+		if(isset($lowmdmk)===false){return createarrerr('error_code','lowmdmk 不能为空',$info);}//防止NULL
+		
+		$m=M($lowmdmk);
+		$mls=$m->where($lowmdmk.'pid='.$pid)->order($lowmdmk.'odr ASC')->select();
+		for($i=0;$i<count($mls);$i++){
+			$dt=array($lowmdmk.'odr'=>($i+1));
+			$id=$mls[$i][$lowmdmk.'id'];
+			$m->where($lowmdmk.'id='.$id)->setField($dt);
+		}
+
+		return createarrok('ok',$data,'',$info);
+	}
+
 
 }
 

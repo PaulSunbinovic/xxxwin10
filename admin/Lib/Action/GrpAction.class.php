@@ -132,68 +132,25 @@ class GrpAction extends Action{
 	
 	function dodelete(){
 
-
-		$rl=D('Rl');
+		header("Content-Type:text/html; charset=utf-8");
+		$tree=D('Tree');$grp=D('Grp');$rl=D('Rl');
 		//先找出要删除的所有ID，然后一个个删
-		$grpid=$_POST['grpid'];
-		
-		$grp=M('grp');
-		
-		///
-		$grpo=$grp->where('grpid='.$grpid)->find();
-		$grppid=$grpo['grppid'];
-		
-		$grpls=$grp->order('grpodr ASC')->select();
-		
-		import('@.TREE.TreeAction');
-		$tree = new TreeAction();
-		//找他的子嗣
-		$sons=$tree->unlimitedForListID($grpls, $grpid, 'grpid', 'grpnm', 'grppid', 'grpodr');
-		$grpidu='-'.$grpid.'-'.$sons;
-		$epldgrpidu=explode('-', $grpidu);
-		for($i=1;$i<count($epldgrpidu)-1;$i++){
-			
-			//通过grp建立的usr-rl 关系也应该不复存在
-			//有多少员工usrs
-			$usrgrp=M('usrgrp');
-			$usrgrpls=$usrgrp->where('f_usrgrp_grpid='.$epldgrpidu[$i])->select();//重点在usrs
-			//下头有多少岗位rl
-			$grprl=M('grprl');
-			$grprlls=$grprl->where('f_grprl_grpid='.$epldgrpidu[$i])->select();//重点在rls
-			//管他三七二十一删删删
-			$usrrl=M('usrrl');
-			for($i=0;$i<count($usrgrpls);$i++){
-				for($j=0;$j<count($grprlls);$j++){
-					$usrrl->where('f_usrrl_usrid='.$usrgrpls[$i]['f_usrgrp_usrid'].' AND f_usrrl_rlid='.$grprlls[$j]['f_grprl_rlid'])->delete();
-				}
-			}
-			
-			
-			$usrgrp=M('usrgrp');
-			$usrgrp->where('f_usrgrp_grpid='.$epldgrpidu[$i])->delete();
-			
-			$grprl=M('grprl');
-			$grprl->where('f_grprl_grpid='.$epldgrpidu[$i])->delete();
-			
-			if($grp->delete($epldgrpidu[$i])){
-				//$this->success('删除成功');
-				$data['status']=1;
-			}else{
-				$data['status']=2;
-				//$this->error($u->getLastSql());
-			}
-			///给剩下的进行排序
-			$grpls=$grp->where('grppid='.$grppid)->order('grpodr ASC')->select();
-			for($i=0;$i<count($grpls);$i++){
-				$dt=array('grpodr'=>$i+1);
-				$grp->where('grpid='.$grpls[$i]['grpid'])->setField($dt);
-			}
-			
-		}
-		/////////删除他就有可能呢删除一排的grp，所以要对所有的grp对应的rl进行删除，斩草除根
-		$grpid=$_GET['id'];
-		//删除角色会导致usrrl相应的数据删除
-      	$rl->deletebygrpid($grpid);
+		$grpid=$_POST['id'];
+		$arr_grpo=$grp->getmo($grpid);$grpo=$arr_grpo['data'];
+      	$grppid=$grpo['grppid'];
+
+		$arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
+      	$grpidls=$tree->unlimitedForListID($grpls,$grpid,'grpid','grpnm','grppid','grpodr');
+      	array_push($grpidls,$grpid);
+
+      	foreach($grpidls as $grpidv){
+      		$grpid=$grpidv;
+      		
+      		$grp->delete($grpid);
+      		
+      	}
+      	//调整缺少了他的同伴的顺序
+      	$tree->paixu($grppid,'grp');
 
 		$this->ajaxReturn($data,'json');
 		

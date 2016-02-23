@@ -57,10 +57,10 @@ class AthAction extends Action {
       //dingzhis
       //覆盖
       $arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
-      $grpls_onodr=$tree->unlimitedForListID($grpls,0,'grpid','grpnm','grppid','grpodr');
+      $grpidls=$tree->unlimitedForListID($grpls,0,'grpid','grpnm','grppid','grpodr');
       $rllsall=array();
-      foreach($grpls_onodr as $grpv){
-        $grpid=$grpv['grpid'];
+      foreach($grpidls as $grpidv){
+        $grpid=$grpidv;
         $arr_rlls=$rl->getmlsbygrpid($grpid);$rlls=$arr_rlls['data'];
         if($rlls){
           $rllsnw=array();
