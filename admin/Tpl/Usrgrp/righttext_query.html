@@ -1,0 +1,67 @@
+<script>
+	var dodelete='__URL__/dodelete';
+</script>
+<!--table部分-->
+<div class='col-md-12'>
+	<!--开始-->
+	<table class='table table-hover table-striped table-bordered' id='NBtb'>
+		<thead>
+			<tr style="background-color: #337ab7;color:#fff">
+				<th>序号</th>
+				<volist name='thls' id='thv'>
+					<th>{$thv}</th>
+				</volist>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<volist name='mls' id='mv'>
+				<tr>
+					<td>{$pagestart+$i}</td>
+					<?php foreach ($mv as $key => $value) {
+						if(!in_array($key,$hide_fld)){
+					?>
+						<td>{$value}</td>
+					<?php 
+						}
+					} ?>
+					<td>
+					<?php if($atho['athd']){ ?><a class='btn btn-danger btn-sm' onclick="dlt(<?php echo $mv[$lowmdmk.'id'] ?>)" >删除</a><?php } ?>
+					</td>
+				</tr>
+			</volist>
+			
+		</tbody>
+	</table>
+	
+	<!--结束-->
+	{$page}
+	
+</div>
+
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">$("#NBtb thead").smartFloatTB();</script>
+<script type="text/javascript">
+function dlt(id){
+	if(confirm("{$deleteconfirm}")){
+		$.ajax({
+            'type': 'GET',
+            'url':dodelete,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': {'id':id},
+            'dataType': 'json',
+            'success': function(data) {
+            	alert('删除成功！');
+            	window.location.reload();
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+	}
+}
+</script>

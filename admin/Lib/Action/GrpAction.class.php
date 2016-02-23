@@ -14,7 +14,7 @@ class GrpAction extends Action{
   		//抛去不是zabojin的属性针对para
       'notself'=>array(),
        ##########modify 添加修改中不需要展示和理会的属性 针对para
-      'no_update'=>array('grpid','grppid','grpodr'),
+      'no_update'=>array('grpid'),
       #####update的时候允许为空的值 针对zabojin刨掉不然显示的update字段后
       'allowempty'=>array(),
 
@@ -41,7 +41,7 @@ class GrpAction extends Action{
   		'no_view'=>array('grpid'),
 	   
       #########删除提醒
-      'deleteconfirm'=>'删除该团队将会把其子团队递归删除',
+      'deleteconfirm'=>'删除该团队将会把其子团队递归删除，同时依附此团队的用户将无所依，依附这个团队的权限也将消失，用户的相应的权限也将消失',
       #####转义
       'transmean'=>array(),//NB
       #####默认值
@@ -83,6 +83,7 @@ class GrpAction extends Action{
 		$str=$tree->unlimitedForListPlus($grpls,0,'grpid','grpnm','grppid','grpodr',__URL__,'Grp');
 		$strpos=$tree->unlimitedForListMv($grpls,0,'grpid','grpnm','grppid','grpodr');
 
+		$this->assign('deleteconfirm',$all['deleteconfirm']);
 		//q特殊
 		$this->assign('tree',$str);
 		$this->assign('treepos',$strpos);
@@ -91,16 +92,12 @@ class GrpAction extends Action{
 		$this->display('edit');
 	}
 
-	//定制
+	//公版
    	public function update(){
    		header("Content-Type:text/html; charset=utf-8");
     	$pb=D('PB');
     	$pb->update($this->all);
-    	//定制s
-    	$this->assign('pid',$_GET['pid']);
-    	$this->assign('odr',$_GET['odr']);
-    	//定制o
-    	
+    	    	
 		$this->display('update');
    	}
 
@@ -115,50 +112,25 @@ class GrpAction extends Action{
    	}
 
 
-   	public function domove(){
-   		
-   	}
-	function move(){
-		$pid=$_POST['pid'];
-		$pos=$_POST['pos'];
-		$id=$_POST['id'];
-		$grp=M('grp');
-		$grpim=$grp->where('grpid='.$id)->find();
+
+	public function domove(){
+		header("Content-Type:text/html; charset=utf-8");
+		$tree=D('Tree');
+
+		$all=$this->all;
+
+		$pid=$_GET['pid'];
+		$pos=$_GET['pos'];
+		$id=$_GET['id'];
+		$mdmk=$all['mdmk'];
 		
-		//先排序新家
-		$newgrphm=$grp->where('grppid='.$pid)->order('grpodr ASC')->select();//新家
-		//先确定原著从哪个位置开始往下挪动一位，给新人留下控件
-		$postrue=$pos+1;
-		//先让原著居民相关的居民移位
-		for($i=$postrue;$i<=count($newgrphm);$i++){//18115806374 15722796181
-			$grpid=$newgrphm[$i-1]['grpid'];
-			$dataorg=array(
-				'grpodr'=>$newgrphm[$i-1]['grpodr']+1
-			);
-			$grp->where('grpid='.$grpid)->setField($dataorg);
-		}
-		//迁入移民
-		$dataim=array(
-			'grppid'=>$pid,
-			'grpodr'=>$postrue,
-		);
-		$grp->where('grpid='.$id)->setField($dataim);
-		
-		
-		//再排序老家
-		$grpold=$grp->where('grppid='.$grpim['grppid'])->order('grpodr ASC')->select();
-		for($i=0;$i<count($grpold);$i++){
-			$dataold=array(
-				'grpodr'=>$i+1
-			);
-			$grp->where('grpid='.$grpold[$i]['grpid'])->setField($dataold);
-		}
-		$data['status']=1;
+		$tree->move($pid,$pos,$id,$mdmk);
+
 		$this->ajaxReturn($data,'json');
 		
 	}
 	
-	function delete(){
+	function dodelete(){
 		//先找出要删除的所有ID，然后一个个删
 		$grpid=$_POST['grpid'];
 		

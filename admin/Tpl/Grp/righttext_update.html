@@ -12,35 +12,38 @@
 			<?php foreach($para as $k=>$v){
 					if(!in_array($k, $no_update)){
 			 ?>
-			<tr><td>{$v}</td><td>
-			<?php if(strstr($k, '_')){ ?>
-			<select id='{$k}'>
-				<option value=''>无</option>
-				<?php //处理萃取下主题
-                  $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
-                ?>
-				<volist name='$k' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
-			</select>
-			<?php }else if(isset($transmean[$k])){ ?>
-			<select id='{$k}'>
-				<?php foreach($transmean[$k] as $v=>$dsc){ ?>
-				<option value="{$v}">{$dsc}</option>
-				<?php } ?>
-			</select>
+			<?php if($k=='grppid'){ ?>
+					<input id='grppid' type="hidden" value="{$mo[$k]}">
+			<?php }else if($k=='grpodr'){ ?>
+					<input id='grpodr' type="hidden" value="{$mo[$k]}">
 			<?php }else{ ?>
-			<input id='{$k}'>
+
+						<tr><td>{$v}</td><td>
+						<?php if(strstr($k, '_')){ ?>
+						<select id='{$k}'>
+							<option value=''>无</option>
+							<?php //处理萃取下主题
+			                  $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
+			                ?>
+							<volist name='$k' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
+						</select>
+						<?php }else if(isset($transmean[$k])){ ?>
+						<select id='{$k}'>
+							<?php foreach($transmean[$k] as $v=>$dsc){ ?>
+							<option value="{$v}">{$dsc}</option>
+							<?php } ?>
+						</select>
+						<?php }else{ ?>
+						<input id='{$k}'>
+						<?php } ?>
+						<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
+						</td></tr>
+
 			<?php } ?>
-			<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
-			</td></tr>
+
 			<?php }
 			} ?>
-			<!--定制部分s-->
-			<?php if($id==0){ ?>
-			<tr><td>父节点id（不可更改）</td><td><input id='grppid' value="{$pid}" readonly></td></tr>
-			<tr><td>顺序（不可更改）</td><td><input id='grpodr' value="{$odr}" readonly></td></tr>
-			<?php } ?>
 			
-			<!--定制部分o-->
 		</tbody>
 	</table>
 	<a class='btn btn-primary' id='update'><?php if($id==0){ ?>添加<?php }else{ ?>修改<?php } ?></a>
@@ -121,10 +124,7 @@ $(function(){
 					obj[key]=valuenow;
 				}
 			}
-			//dingzhis
-			obj['grppid']=$('#grppid').val();
-			obj['grpodr']=$('#grpodr').val();
-			//dingzhio
+			
 		}
 		
 

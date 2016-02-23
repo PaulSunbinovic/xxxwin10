@@ -72,4 +72,25 @@ function mvhr(pid,pos){
 	}
 
 }
+
+function dlt(id){
+	if(confirm("{$deleteconfirm}")){
+		$.ajax({
+            'type': 'GET',
+            'url':dodelete,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': {'id':id},
+            'dataType': 'json',
+            'success': function(data) {
+            	alert('删除成功！');
+            	window.location.reload();
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+	}
+}
 </script>

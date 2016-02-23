@@ -101,6 +101,18 @@ class UsrModel{
 
 		return createarrok('ok',$data,$msg,$info);
 	}
+	//############test
+	public function getmlsbyodr($odr){
+		
+		$info=collectinfo(__METHOD__,'$odr',array($odr));
 
+		if(isset($odr)==false){return createarrerr('error_code','odr 不能为空',$info);}
+		
+		$usr=M('usr');
+		$usrls=$usr->order('usrodr '.$odr)->select();
+		
+		return createarrok('ok',$usrls,'',$info);
+		
+	}
 } 
 ?>

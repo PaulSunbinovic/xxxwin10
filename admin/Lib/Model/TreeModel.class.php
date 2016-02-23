@@ -162,6 +162,117 @@ class TreeModel{
 	}
 
 
+	//############test
+	public function move($pid,$pos,$id,$mdmk){
+		$info=collectinfo(__METHOD__,'$pid,$pos,$id,$mdmk',array($pid,$pos,$id,$mdmk));
+		if(isset($pid)===false){return createarrerr('error_code','pid 不能为空',$info);}//防止NULL
+		if(isset($pos)===false){return createarrerr('error_code','pos 不能为空',$info);}//防止NULL
+		if(isset($id)===false){return createarrerr('error_code','id 不能为空',$info);}//防止NULL
+		if(isset($mdmk)===false){return createarrerr('error_code','mdmk 不能为空',$info);}//防止NULL
+		
+		$lowmdmk=strtolower($mdmk);
+
+		$m=M($lowmdmk);
+		$mo_im=$m->where($lowmdmk.'id='.$id)->find();
+		
+		//先排序新家
+		$newmls_hm=$m->where($lowmdmk.'pid='.$pid)->order($lowmdmk.'odr ASC')->select();//新家
+		//先确定原著从哪个位置开始往下挪动一位，给新人留下控件
+		$postrue=$pos+1;
+		//先让原著居民相关的居民移位
+		for($i=$postrue;$i<=count($newmls_hm);$i++){//18115806374 15722796181
+			$mid=$newmls_hm[$i-1]['grpid'];
+			$dataorg=array(
+				$lowmdmk.'odr'=>$newmls_hm[$i-1][$lowmdmk.'odr']+1
+			);
+			$m->where($lowmdmk.'id='.$mid)->setField($dataorg);
+		}
+		//迁入移民
+		$dataim=array(
+			$lowmdmk.'pid'=>$pid,
+			$lowmdmk.'odr'=>$postrue,
+		);
+		$m->where($lowmdmk.'id='.$id)->setField($dataim);
+		
+		
+		//再排序老家
+		$mls_old=$m->where($lowmdmk.'pid='.$mo_im[$lowmdmk.'pid'])->order($lowmdmk.'odr ASC')->select();
+		for($i=0;$i<count($$mls_old);$i++){
+			$dataold=array(
+				$lowmdmk.'odr'=>$i+1
+			);
+			$m->where($lowmdmk.'id='.$mls_old[$i][$lowmdmk.'id'])->setField($dataold);
+		}
+		
+
+		return createarrok('ok',$data,'',$info);
+	}
+
+	// public function unlimitedForListSLCT($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
+	// 	$str='';
+				
+	// 	foreach ($cate as $v) {
+	// 		if ($v[$pidzd] == $pid) {
+	// 			$hg=$this->henggang($cate, $v[$idzd], $idzd, $pidzd);
+	// 			$str=$str."<option value='".$v[$idzd]."'>".$hg.$v[$nmzd].'</option>';
+	// 			$str=$str.self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd);
+	// 		}
+	// 	}
+	// 	if($str==''){
+	// 		return '';
+	// 	}else{
+	// 		return $str;//
+	// 	}
+			
+	// }
+
+	//BD组合多维数组结果以List形式（ul li）
+	public function unlimitedForListSLCT($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
+		$arr=array();
+				
+		foreach ($cate as $v) {
+			if ($v[$pidzd] == $pid) {
+				$hg=$this->henggang($cate, $v[$idzd], $idzd, $pidzd);
+				$arr_tmp=array($idzd=>$v[$idzd],$nmzd=>$hg.$v[$nmzd]);
+				array_push($arr,$arr_tmp);
+				array_merge($arr,self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
+				
+			}
+		}
+		return $arr;
+			
+	}
+
+	//找有几个祖先（爸爸的爸爸的爸爸...）
+	public function henggang($cate,$id,$idzd,$pidzd){
+		$str='';
+		foreach ($cate as $v){
+			if($v[$idzd]==$id){
+				if($v[$pidzd]!=0){
+					$str='-'.self::henggang($cate, $v[$pidzd], $idzd, $pidzd);
+					break;
+				}
+			}
+		}
+		return $str;
+	}
+
+	//BD组合多维数组结果以List形式（ul li）寻找所有ID
+	public function unlimitedForListID($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
+		$arr=array();
+		
+		foreach ($cate as $v) {
+			if ($v[$pidzd] == $pid) {
+				array_push($arr,$v[$idzd]);
+				array_merge($arr,self::unlimitedForListID($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
+				
+			}
+		}
+		return $arr;
+			
+	}
+
+
 }
 
 ?>
