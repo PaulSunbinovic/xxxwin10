@@ -79,7 +79,7 @@ class MdAction extends Action {
       //dingzhis
       //添加了模块必然会导致ath的增加
       $mdid=$_GET['mdid'];
-      $ath->addbymdid($mdid)
+      $ath->addbymdid($mdid);
       //dingzhio
    		$this->ajaxReturn($data,'json');
    	}
@@ -87,12 +87,10 @@ class MdAction extends Action {
    	//dingzhi
    	public function dodelete(){
    		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');$ath=D('Ath');
-   		$pb->dodelete($this->all);
-  		//dingzhis
-      //删除md势必造成ath中的相应权限删除
+   		//dingzhis
+      $md=D('Md');
       $mdid=$_GET['id'];
-      $ath->deletebymdid($mdid);
+      $md->delete($mdid);
       //dingzhio
    		$this->ajaxReturn($data,'json');
    	}

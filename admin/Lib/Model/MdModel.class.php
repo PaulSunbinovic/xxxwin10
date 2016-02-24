@@ -26,14 +26,29 @@ class MdModel extends Action{
 		return createarrok('ok',$mdo,'',$info);
 	}
 	####
-	public function deletemdlsbylbid($lbid){
+	public function deletebylbid($lbid){
 		$info=collectinfo(__METHOD__,'$lbid',array($lbid));
 		if(isset($lbid)===false){return createarrerr('error_code','lbid 不能为空',$info);}//防止NULL
 		
-		$md=M('md');
-		$md->where('f_md_lbid='.$lbid)->delete();
+		$arr_mdls=$this->getmdlsbylbid($lbid);$mdls=$arr_mdls['data'];
+		foreach($mdls as $mdv){
+			$this->delete($mdv['mdid']);
+		}
 
 		return createarrok('ok',$data,'',$info);
 	}
+	####
+	public function delete($mdid){
+		$info=collectinfo(__METHOD__,'$mdid',array($mdid));
+		if(isset($mdid)===false){return createarrerr('error_code','mdid 不能为空',$info);}//防止NULL
+		
+		$md=M('md');$ath=D('Ath');
+		$md->where('mdid='.$mdid)->delete();
+		//删除依赖
+		$ath->deletebymdid($mdid);
+
+		return createarrok('ok',$data,'',$info);
+	}
+
 } 
 ?>

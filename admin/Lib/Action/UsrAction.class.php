@@ -99,12 +99,11 @@ class UsrAction extends Action {
     //dingzhi
     public function dodelete(){
       header("Content-Type:text/html; charset=utf-8");
-      $pb=D('PB');$usrrl=D('Usrrl');
-      $pb->dodelete($this->all);
       //dingzhis
+      $usr=D('Usr');
+      
       $usrid=$_GET['id'];
-      //删除用户会导致usrrl相应的数据删除
-      $usrrl->deletebyusrid($usrid);
+      $usr->delete($usrid);
       //dingzhio
       $this->ajaxReturn($data,'json');
     }

@@ -52,27 +52,70 @@ class AthModel extends Action{
 		return createarrok('ok',$data,'',$info);
 	}
 
+	
+
+
 	//############test
-	public function deletebymdid($mdid){
-		$info=collectinfo(__METHOD__,'$mdid',array($mdid));
-		if(isset($mdid)===false){return createarrerr('error_code','mdid 不能为空',$info);}//防止NULL
-		
+	public function getmlsbyrlid($rlid){
+		$info=collectinfo(__METHOD__,'$rlid',array($rlid));
+		if(isset($rlid)===false){return createarrerr('error_code','rlid 不能为空',$info);}//防止NULL
+
 		$ath=M('ath');
-		$ath->where('f_ath_mdid='.$mdid)->delete();
+		$athls=$athwhere('f_ath_rlid='.$rlid)->select();
 
-		return createarrok('ok',$data,'',$info);
+		return createarrok('ok',$athls,'',$info);
 	}
-
+	
 	//############test
 	public function deletebyrlid($rlid){
 		$info=collectinfo(__METHOD__,'$rlid',array($rlid));
 		if(isset($rlid)===false){return createarrerr('error_code','rlid 不能为空',$info);}//防止NULL
 		
-		$ath=M('ath');
-		$ath->where('f_ath_rlid='.$rlid)->delete();
+		$arr_athls=$this->getmlsbyrlid($rlid);$athls=$arr_athls['data'];
+		foreach($athls as $athv){
+			$this->delete($athv['athid']);
+		}
 
 		return createarrok('ok',$data,'',$info);
 	}
 
+	//############test
+	public function getmlsbymdid($mdid){
+		$info=collectinfo(__METHOD__,'$mdid',array($mdid));
+		if(isset($mdid)===false){return createarrerr('error_code','mdid 不能为空',$info);}//防止NULL
+
+		$ath=M('ath');
+		$athls=$ath->where('f_ath_mdid='.$mdid)->select();
+
+		return createarrok('ok',$athls,'',$info);
+	}
+	
+	//############test
+	public function deletebymdid($mdid){
+		$info=collectinfo(__METHOD__,'$mdid',array($mdid));
+		if(isset($mdid)===false){return createarrerr('error_code','mdid 不能为空',$info);}//防止NULL
+		
+		$arr_athls=$this->getmlsbymdid($mdid);$athls=$arr_athls['data'];
+		foreach($athls as $athv){
+			$this->delete($athv['athid']);
+		}
+
+		return createarrok('ok',$data,'',$info);
+	}
+
+	####
+	public function delete($athid){
+		$info=collectinfo(__METHOD__,'$athid',array($athid));
+		if(isset($athid)===false){return createarrerr('error_code','athid 不能为空',$info);}//防止NULL
+		
+		$ath=M('ath');
+		$ath->where('athid='.$athid)->delete();
+		      	
+		return createarrok('ok',$data,'',$info);
+	}
+
+	
+
+	
 } 
 ?>

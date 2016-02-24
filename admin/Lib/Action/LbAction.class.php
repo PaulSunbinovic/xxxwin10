@@ -70,12 +70,13 @@ class LbAction extends Action {
    		$this->ajaxReturn($data,'json');
    	}
 
-   	//公版
+   	//dingzhi
    	public function dodelete(){
    		header("Content-Type:text/html; charset=utf-8");
+      //dingzhis
    		$lb=D('Lb');
-   		$lb->dodelete($_GET['id']);
-  		
+   		$lb->delete($_GET['id']);
+  		//dingzhio
    		$this->ajaxReturn($data,'json');
    	}
 

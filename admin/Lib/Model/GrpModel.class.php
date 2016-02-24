@@ -19,17 +19,14 @@ class GrpModel extends Action{
 		$info=collectinfo(__METHOD__,'$grpid',array($grpid));
 		if(isset($grpid)===false){return createarrerr('error_code','grpid 不能为空',$info);}//防止NULL
 		
-		$grp=M('grp');$rl=D('Rl');$ath=D('Ath');$usrrl=D('Usrrl');
+		$grp=M('grp');$rl=D('Rl');
 
 		$grp->where('grpid='.$grpid)->delete();
 
-		//删除角色会导致usrrl相应的数据删除
+		//删除grp会导致rl相应的数据删除
       	$rl->deletebygrpid($grpid);
 
-      	//删除角色会导致usrrl相应的数据删除
-      	$usrrl->deletebyrlid($rlid);
-      	//删除rl势必造成ath中的相应权限删除
-      	$ath->deletebyrlid($rlid);
+      	
 
 		return createarrok('ok',$data,'',$info);
 	}

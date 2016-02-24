@@ -114,5 +114,22 @@ class UsrModel{
 		return createarrok('ok',$usrls,'',$info);
 		
 	}
+
+	//############test
+	public function delete($usrid){
+		$info=collectinfo(__METHOD__,'$usrid',array($usrid));
+		if(isset($usrid)===false){return createarrerr('error_code','usrid 不能为空',$info);}//防止NULL
+		
+		$usr=M('usr');$usrrl=D('Usrrl');
+
+		$usr->where('usrid='.$usrid)->delete();
+
+		//删除usr会导致usrrl相应的数据删除
+      	$usrrl->deletebyusrid($usrid);
+
+      	
+
+		return createarrok('ok',$data,'',$info);
+	}
 } 
 ?>
