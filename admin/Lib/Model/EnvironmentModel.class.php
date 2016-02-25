@@ -15,8 +15,21 @@ class EnvironmentModel extends Action{
 		
 		//设置权限
 		$arr_md=$md->getmdobymdmk($mdmk);
-		$arr_atho=$rbac->getatho($usross['usrid'],$arr_md['data']['mdid']);
-		$this->assign('atho',$arr_atho['data']);
+		$arr_atho=$rbac->getatho($usross['usrid'],$arr_md['data']['mdid']);$atho=$arr_atho['data'];
+		switch (ACTION_NAME) {
+			case 'view':
+				if($atho['athv']==0){$this->error('您无此模块的查看权限，请联系管理员');}
+				break;
+
+			case 'query':
+				if($atho['athv']==0){$this->error('您无此模块的浏览权限，请联系管理员');}
+				break;
+			
+			case 'update':
+				if($atho['athm']==0){$this->error('您无此模块的更新权限，请联系管理员');}
+				break;
+		}
+		$this->assign('atho',$atho);
 		//处理左边列表
 		$left->setleft($usross['usrid'],$mdmk);
 

@@ -48,7 +48,7 @@
 					});
 				});
 				</script>
-				<div><img src="{$mo['usrpt']}" class='thumbnail' style='width:80px;height:80px' id='imgg' /><input type='hidden' id='{$k}' name='pt'/></div>
+				<div><img src="{$mo['usrpt']}" class='thumbnail' style='width:80px;height:80px' id='imgg' /><input type='hidden' id='{$k}' name='pt' value="{$mo['usrpt']}"/></div>
 				<div id="upload"></div>
 			    <!-- pt over -->
 			<?php }else{ ?>
@@ -70,7 +70,7 @@
 				<input id='{$k}'>
 				<?php } ?>
 			<?php } ?>
-			<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
+			<script>$('#'+"{$k}").val("{$moforjs[$k]}");</script>
 			</td></tr>
 			<?php }
 			} ?>
@@ -91,7 +91,7 @@ foreach($para as $k=>$v){
 ?>
 para["{$k}"]="{$v}";
 selfpara.push("{$k}");
-origindata["{$k}"]="{$mo[$k]}";
+origindata["{$k}"]="{$moforjs[$k]}";
 <?php 
 	}
 } 

@@ -1,0 +1,45 @@
+
+<!--table部分-->
+<div class='col-md-12' style="padding-top: 20px">
+	<!--开始-->
+	<table class='table table-hover table-striped table-bordered'>
+		<tbody>
+			<?php foreach($para as $k=>$v){
+					if(!in_array($k, $no_view)){
+			 ?>
+			 <tr><td>{$para[$k]}</td><td>{$mo[$k]}</td></tr>
+			<?php }
+			} ?>
+		</tbody>
+	</table>
+	<h3 style="text-align: center">{$mo['atctpc']}</h3>
+	<ol class="breadcrumb">{$tree}</ol>
+	<?php if($mo['atccv']){ ?><div style="text-align: center"><img class='img-round' style="width:100%" src='{$mo[atccv]}'></div><?php } ?>
+	<br>
+	<div class='col-md-12 nopadding' style="border-bottom: 1px solid #ccc;text-align: right;color:#888">
+		作者：{$mo['atcath']}&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;更新时间：{$mo['atcmdftm']}&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;点击数：{$mo['atccnt']}
+	</div>
+	<div class='clearfix'></div>
+	<br>
+	
+	<?php if($mo['atcsmr']){ ?>
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    摘要：{$mo['atcsmr']}
+	  </div>
+	</div>
+	<?php } ?>
+	<link rel="stylesheet" href="__PUBLIC__/etc/baguettebox/baguettebox.min.css">
+	<script src="__PUBLIC__/etc/baguettebox/baguettebox.min.js"></script>
+	<div class="baguetteBoxOne gallery">
+	{$mo['atcctt']}
+	</div>
+	<script type="text/javascript">
+	baguetteBox.run('.baguetteBoxOne', {
+	    animation: 'fadeIn',
+	});
+	</script>
+	
+	<!--<a class='btn btn-primary' href="__URL__/update/id/<?php echo $mo[$lowmdmk.'id'] ?>">修改</a>-->
+</div>
+

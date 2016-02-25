@@ -27,9 +27,9 @@ class AtcAction extends Action {
     //   'odr_dflt'=>array('aanm'=>'ASC'),
 
       'spccdtls'=>array(),//NB
-      'odrls'=>array(),//NB
+      'odrls'=>array('atctp','atcmdftm'),//NB
       'spccdt_dflt'=>array(),//NB
-      'odr_dflt'=>array(),//NB
+      'odr_dflt'=>array('atctp'=>'DESC','atcmdftm'=>'DESC'),//NB
       //hide的fld必须有，他们虽然不显示但是必须选择，这样才能在第一次进入query的时候，隐藏属性可以被调用，特别是id和fid
   		'fld_dflt'=>array('atcid','f_atc_bdid','bdnm','atctpc','atcath','atcaddtm','atcmdftm','atctp','atcps','atcanc','atcdnmc','atccnt','atcnw','atczn','atctc','atcvw'),//NB
   		'cdt_dflt'=>array(),//NB
@@ -38,14 +38,14 @@ class AtcAction extends Action {
   		
   		'defaultls'=>1,//默认枚举//NB
   		##########view
-  		'no_view'=>array('atcid','f_atc_bdid'),
+  		'no_view'=>array('atcid','f_atc_bdid','atccv','atcsmr','atcctt'),
 	   
       #########删除提醒
       'deleteconfirm'=>'确定要删除此条记录？',
       #####转义
       'transmean'=>array('atctp'=>array('0'=>'否','1'=>'是'),'atcps'=>array('0'=>'否','1'=>'是'),'atcanc'=>array('0'=>'否','1'=>'是'),'atcdnmc'=>array('0'=>'否','1'=>'是'),'atcnw'=>array('0'=>'否','1'=>'是'),'atcvw'=>array('0'=>'否','1'=>'是'),),//NB
       #####默认值
-      'dfltvalue'=>array('atcvw'=>1),
+      'dfltvalue'=>array('atcvw'=>1,'atctp'=>0,'atcps'=>0,'atcanc'=>0,'atcdnmc'=>0,'atccnt'=>0,'atcnw'=>0,'atczn'=>0,'atctc'=>0,'atcvw'=>0),
       
     	);
 
@@ -57,37 +57,103 @@ class AtcAction extends Action {
       #dingzhis
       #手动枚举并覆盖
       $arr_bdls=$bd->getmlsbyodr('bdodr ASC');$bdls=$arr_bdls['data'];
-      $arr=$tree->unlimitedForListSLCT($bdls,0,'bdid','bdnm','bdpid','bdodr');p($arr);die;
+      $arr=$tree->unlimitedForListSLCT($bdls,0,'bdid','bdnm','bdpid','bdodr');
       $this->assign('f_atc_bdid',$arr);
       #dingzhio
       $this->display('Cmn:query');
   
     }
     
-    //公版
+    //dingzhi
     public function view(){
     	header("Content-Type:text/html; charset=utf-8");
-    	$pb=D('PB');
-    	$pb->view($this->all);
-		  $this->display('Cmn:view');
+    	//dingzhis
+      $environment=D('Environment');$atc=D('Atc');$tree=D('Tree');$bd=D('Bd');
+
+      $all=$this->all;
+
+      $para=$all['para'];$this->assign('para',$para);
+      $no_view=$all['no_view'];$this->assign('no_view',$no_view);
+
+      $mdmk=$all['mdmk'];
+
+      $arr_usross=$environment->setenvironment($mdmk);$usross=$arr_usross['data'];
+      
+      $atcid=$_GET['id'];
+      $arr_mo=$atc->getmo($atcid);$mo=$arr_mo['data'];
+
+      $arr_bdls=$bd->getmlsbyodr('bdodr ASC');$bdls=$arr_bdls['data'];
+      $str=$tree->findF($bdls, $mo['f_atc_bdid'], 'bdid','bdnm','bdpid');
+      $this->assign('tree',$str);
+
+      //对文章内容进行小调整
+      $imgrule='/<img.*src=(\"|\')(.+)\1.*>/U';//图片规则
+      if (preg_match_all($imgrule,$mo['atcctt'],$quote)){
+        //p($quote);die;//$quote平时可以随意查看，有帮助，特别是$quoto[1]代表了啥，2代表了啥，0代表了啥
+        for($i=0;$i<count($quote[0]);$i++){
+          if(!preg_match("/icon_/", $quote[2][$i]))
+          $mo['atcctt']=str_replace($quote[0][$i], "<a href='".$quote[2][$i]."'>".$quote[0][$i].'</a>', $mo['atcctt']);
+        }
+      }
+
+      $arr_nwcnt=$atc->addatccnt($mo['atccnt'],$atcid);$nwcnt=$arr_nwcnt['data'];
+      $mo['atccnt']=$nwcnt;
+
+     
+      $transmean=$all['transmean'];
+      foreach($mo as $k=>$v){
+        if(isset($transmean[$k])){
+          $mo[$k]=$transmean[$k][$mo[$k]];
+        }
+      }
+      $this->assign('mo',$mo);
+      $this->assign('ttl',$mo['atctpc']);
+
+      //dingzhio
+		  $this->display('view');
     }
    
-   	//公版
+   	//
    	public function update(){
    		header("Content-Type:text/html; charset=utf-8");
-    	$pb=D('PB');
+    	$pb=D('PB');$bd=D('Bd');$tree=D('Tree');
     	$pb->update($this->all);
-		  $this->display('Cmn:update');
+      //dingzhis
+      $this->assign('project',C('PROJECT'));//为editor而生//为默认图片而生
+      #手动枚举并覆盖
+      $arr_bdls=$bd->getmlsbyodr('bdodr ASC');$bdls=$arr_bdls['data'];
+      $arr=$tree->unlimitedForListSLCT($bdls,0,'bdid','bdnm','bdpid','bdodr');
+      $this->assign('f_atc_bdid',$arr);
+      //dingzhio
+		  $this->display('update');
    	}
 
    	//公版
    	public function doupdate(){
-   		header("Content-Type:text/html; charset=utf-8");
-   		$pb=D('PB');
-   		$arr_pattern=$pb->doupdate($this->all);
-   		$data['pattern']=$arr_pattern['pattern'];
+   		$atc=D('Atc');
 
-   		$this->ajaxReturn($data,'json');
+        $all=$this->all;
+        $get=$_GET;
+        
+        $id=$get['atcid'];
+        unset($get['atcid']);
+        unset($get['_URL_']);
+
+        $get['atcctt']=stripslashes($get['atcctt']);
+
+        if($id==0){
+            $get['atcaddtm']=date('Y-m-d h:m:s');
+            $get['atcmdftm']=date('Y-m-d h:m:s');
+            $atc->add($get);
+            $pattern=0;
+        }else{
+            $get['atcmdftm']=date('Y-m-d h:m:s');
+            $atc->mdf($get,$id);
+            $pattern=1;
+        }
+        
+        $data['pattern']=$pattern;
+        $this->ajaxReturn($data,'json');
    	}
 
    	//公版

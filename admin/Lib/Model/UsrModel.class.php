@@ -37,10 +37,11 @@ class UsrModel{
 	}
 	//############test
 	public function login($usrnm,$usrpw,$rmb){
-		$info=collectinfo(__METHOD__,'$usrnm,$usrpw',array($usrnm,$usrpw));
+		$info=collectinfo(__METHOD__,'$usrnm,$usrpw,$rmb',array($usrnm,$usrpw,$rmb));
 
-		if(isset($usrnm)==false){return createarrerr('error_code','usrnm不能为空',$info);}
-		if(isset($usrpw)==false){return createarrerr('error_code','usrpw不能为空',$info);}
+		if(isset($usrnm)==false){return createarrerr('error_code','usrnm 不能为空',$info);}
+		if(isset($usrpw)==false){return createarrerr('error_code','usrpw 不能为空',$info);}
+		if(isset($rmb)==false){return createarrerr('error_code','rmb 不能为空',$info);}
 
 		$usr=D('Usr');
 		$arr_usro=$usr->getusrobyusrnm($usrnm,1);

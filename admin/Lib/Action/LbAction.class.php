@@ -57,7 +57,7 @@ class LbAction extends Action {
    		header("Content-Type:text/html; charset=utf-8");
     	$pb=D('PB');
     	$pb->update($this->all);
-		  $this->display('Cmn:update');
+		$this->display('Cmn:update');
    	}
 
    	//公版

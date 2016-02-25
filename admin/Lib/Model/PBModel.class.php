@@ -150,6 +150,7 @@ class PBModel extends Action{
     	}
     	
     	$this->assign('mo',$mo);
+    	$this->assign('moforjs',transforjs($mo));
     	$this->assign('ttl',$mo[$lowmdmk.'nm'].$pattern);
 		
 		return createarrok('ok',$data,'',$info);

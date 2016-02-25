@@ -68,11 +68,8 @@ class AthAction extends Action {
             $rlv['rlnm']='【'.$rlv['grpnm'].'】'.$rlv['rlnm'];
             array_push($rllsnw,$rlv);
           }
-          if($rllsall){
-            $rllsall=array_merge($rllsall,$rllsnw);
-          }else{
-            $rllsall=$rllsnw;
-          }
+          $rllsall=array_merge($rllsall,$rllsnw);
+          
         }
         
       }

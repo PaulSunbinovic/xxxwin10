@@ -36,7 +36,7 @@
 						<?php }else{ ?>
 						<input id='{$k}'>
 						<?php } ?>
-						<script>$('#'+"{$k}").val("{$mo[$k]}");</script>
+						<script>$('#'+"{$k}").val("{$moforjs[$k]}");</script>
 						</td></tr>
 
 			<?php } ?>
@@ -61,7 +61,7 @@ foreach($para as $k=>$v){
 ?>
 para["{$k}"]="{$v}";
 selfpara.push("{$k}");
-origindata["{$k}"]="{$mo[$k]}";
+origindata["{$k}"]="{$moforjs[$k]}";
 <?php 
 	}
 } 

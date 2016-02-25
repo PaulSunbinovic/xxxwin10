@@ -128,5 +128,14 @@ function je($arr){
 	return json_encode($arr,JSON_UNESCAPED_UNICODE);
 }
 #########
-
+//通过转义变成js可以接受的数据//js为了接受数据正常，相关必须保证双引号接受
+function transforjs($arr){
+	$arrnw=array();
+	foreach ($arr as $k => $v) {
+		$v=str_replace('"', '\"', $v);
+		$arrnw[$k]=$v;
+	}
+	
+	return $arrnw;
+}
 ?>

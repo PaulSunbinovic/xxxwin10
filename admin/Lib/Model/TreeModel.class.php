@@ -208,40 +208,40 @@ class TreeModel{
 		return createarrok('ok',$data,'',$info);
 	}
 
-	public function unlimitedForListSLCT($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
-		$str='';
-				
-		foreach ($cate as $v) {
-			if ($v[$pidzd] == $pid) {
-				$hg=$this->henggang($cate, $v[$idzd], $idzd, $pidzd);
-				$str=$str."<option value='".$v[$idzd]."'>".$hg.$v[$nmzd].'</option>';
-				$str=$str.self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd);
-			}
-		}
-		if($str==''){
-			return '';
-		}else{
-			return $str;//
-		}
-			
-	}
-
-	//BD组合多维数组结果以List形式（ul li）
 	// public function unlimitedForListSLCT($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
-	// 	$arr=array();
+	// 	$str='';
 				
 	// 	foreach ($cate as $v) {
 	// 		if ($v[$pidzd] == $pid) {
 	// 			$hg=$this->henggang($cate, $v[$idzd], $idzd, $pidzd);
-	// 			$arr_tmp=array($idzd=>$v[$idzd],$nmzd=>$hg.$v[$nmzd]);
-	// 			array_push($arr,$arr_tmp);
-	// 			array_merge($arr,self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
-				
+	// 			$str=$str."<option value='".$v[$idzd]."'>".$hg.$v[$nmzd].'</option>';
+	// 			$str=$str.self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd);
 	// 		}
 	// 	}
-	// 	return $arr;
+	// 	if($str==''){
+	// 		return '';
+	// 	}else{
+	// 		return $str;//
+	// 	}
 			
 	// }
+
+	//BD组合多维数组结果以List形式（ul li）
+	public function unlimitedForListSLCT($cate,$pid,$idzd,$nmzd,$pidzd,$odrzd){
+		$arr=array();
+				
+		foreach ($cate as $v) {
+			if ($v[$pidzd] == $pid) {
+				$hg=$this->henggang($cate, $v[$idzd], $idzd, $pidzd);
+				$arr_tmp=array($idzd=>$v[$idzd],$nmzd=>$hg.$v[$nmzd]);
+				array_push($arr,$arr_tmp);
+				$arr=array_merge($arr,self::unlimitedForListSLCT($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
+				
+			}
+		}
+		return $arr;
+			
+	}
 
 	//找有几个祖先（爸爸的爸爸的爸爸...）
 	public function henggang($cate,$id,$idzd,$pidzd){
@@ -288,6 +288,18 @@ class TreeModel{
 
 		return createarrok('ok',$data,'',$info);
 	}
+
+	public function findF($cate,$id,$idzd,$nmzd,$pidzd){
+		$str='';
+		foreach ($cate as $v){
+			if($v[$idzd]==$id){
+				$str=self::findF($cate,$v[$pidzd],$idzd,$nmzd,$pidzd).'<li><a href="#">'.$v[$nmzd].'</a> </li>';
+				break;
+			}
+		}
+		return $str;
+	}
+		
 
 
 }

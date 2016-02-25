@@ -71,7 +71,7 @@ class UsrAction extends Action {
     //定制
     public function doupdate(){
         header("Content-Type:text/html; charset=utf-8");
-        $usr=D(Usr);
+        $usr=D('Usr');
 
         $all=$this->all;
         $get=$_GET;
