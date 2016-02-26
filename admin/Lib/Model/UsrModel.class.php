@@ -132,5 +132,35 @@ class UsrModel{
 
 		return createarrok('ok',$data,'',$info);
 	}
+
+	//############test
+	public function checkusrpw($usrid,$usrpw){
+		$info=collectinfo(__METHOD__,'$usrid,$usrpw',array($usrid,$usrpw));
+		if(isset($usrid)===false){return createarrerr('error_code','usrid 不能为空',$info);}//防止NULL
+		if(isset($usrpw)===false){return createarrerr('error_code','usrpw 不能为空',$info);}//防止NULL
+		
+		$usr=M('usr');
+		$arr_usro=$this->getusrobyusrid($usrid);$usro=$arr_usro['data'];
+
+		if($usro['usrpw']==md5($usrpw)){
+			$rslt=1;
+		}else{
+			$rslt=0;$msg='原始密码不正确！';
+		}
+		
+		return createarrok('ok',$rslt,$msg,$info);
+	}
+
+	public function mdfusrpw($usrid,$usrpw){
+		$info=collectinfo(__METHOD__,'$usrid,$usrpw',array($usrid,$usrpw));
+		if(isset($usrid)===false){return createarrerr('error_code','usrid 不能为空',$info);}//防止NULL
+		if(isset($usrpw)===false){return createarrerr('error_code','usrpw 不能为空',$info);}//防止NULL
+		
+		$usr=M('usr');
+		$dt=array('usrpw'=>md5($usrpw));
+		$usr->where('usrid='.$usrid)->setField($dt);
+
+		return createarrok('ok',$data,'',$info);
+	}
 } 
 ?>

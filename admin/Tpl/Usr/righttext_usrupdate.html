@@ -1,0 +1,180 @@
+<script>
+	var doupdate='__URL__/doupdate';
+	var obj=new Object();
+	var addormdf="{$id}";
+	obj["{$lowmdmk}"+"id"]="{$id}";
+</script>
+<!--table部分-->
+<div class='col-md-12' style='padding-top: 20px'>
+	<!--开始-->
+	<table class='table table-hover table-striped table-bordered'>
+		<tbody>
+			<?php foreach($para as $k=>$v){
+					if(!in_array($k, $no_usrupdate)){
+			 ?>
+			<tr><td>{$v}</td><td>
+			<?php if($k=='usrpt'){ ?>
+				<!-- pt start -->
+				<link rel="stylesheet" type="text/css" href="__PUBLIC__/etc/huploadify/html5uploader.css"/>
+				<script type="text/javascript" src="__PUBLIC__/etc/huploadify/jquery.html5uploader.js"></script>
+				<script>var dogivetail='__APP__/Hupldf/dogivetail'</script>
+		   		<script type="text/javascript">
+				$(function(){
+					$('#upload').html5uploader({
+						fileTypeExts:'image/jpeg,image/png',
+						auto:true,
+						multi:false,
+						removeTimeout:0,
+						url:'__APP__/Hupldf/upload/folder/usr',//
+						onUploadStart:function(){
+							//alert('开始上传');
+							var timestamp = (new Date()).valueOf();
+						},
+						onInit:function(){
+							//alert('初始化');
+						},
+						onUploadComplete:function(file){
+							//alert('上传完成');
+							$.post(
+								'__APP__/Hupldf/showphoto',
+								{},
+								function(data){
+									$('#imgg').attr('src',data.myfl);
+									$('input[name=pt]').val(data.myfl);
+								},
+								'json'
+							);
+						}
+					});
+				});
+				</script>
+				<div><img src="{$mo['usrpt']}" class='thumbnail' style='width:80px;height:80px' id='imgg' /><input type='hidden' id='{$k}' name='pt' value="{$mo['usrpt']}"/></div>
+				<div id="upload"></div>
+			    <!-- pt over -->
+			<?php }else{ ?>
+				<?php if(strstr($k, '_')){ ?>
+				<select id='{$k}'>
+					<option value=''>无</option>
+					<?php //处理萃取下主题
+	                  $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
+	                ?>
+					<volist name='$k' id='v'><option value="<?php echo $v[$tmp.'id'] ?>"><?php echo $v[$tmp.'nm'] ?></option></volist>
+				</select>
+				<?php }else if(isset($transmean[$k])){ ?>
+				<select id='{$k}'>
+					<?php foreach($transmean[$k] as $v=>$dsc){ ?>
+					<option value="{$v}">{$dsc}</option>
+					<?php } ?>
+				</select>
+				<?php }else{ ?>
+				<input id='{$k}'>
+				<?php } ?>
+			<?php } ?>
+			<script>$('#'+"{$k}").val("{$moforjs[$k]}");</script>
+			</td></tr>
+			<?php }
+			} ?>
+		</tbody>
+	</table>
+	<a class='btn btn-primary' id='update'><?php if($id==0){ ?>添加<?php }else{ ?>修改<?php } ?></a>
+</div>
+
+<script>
+//自身参数，初始数据
+var para=new Object();
+var selfpara=new Array();
+var origindata=new Object();
+
+<?php 
+foreach($para as $k=>$v){ 
+	if(!in_array($k, $notself)){
+?>
+para["{$k}"]="{$v}";
+selfpara.push("{$k}");
+origindata["{$k}"]="{$moforjs[$k]}";
+<?php 
+	}
+} 
+?>
+//zabojin的属性里面不用管的，也不用显示的
+var no_usrupdate=new Array();
+<?php 
+foreach($no_usrupdate as $nuv){ 
+?>
+no_usrupdate.push("{$nuv}");
+<?php 
+} 
+?>
+//zabojin的属性里面在显示中，允许空的
+var allowempty=new Array();
+<?php 
+foreach($allowempty as $aev){ 
+?>
+allowempty.push("{$aev}");
+<?php 
+} 
+?>
+
+//#########
+$(function(){
+	$('#update').click(function(){
+		//首先把相关的参数数据聚集起来，把自身更新需要的参数以及变动的数据进行传输
+		//由于第一个往往是id所以，就不去考虑了
+		//先判断是否为空
+		for(var i=1;i<selfpara.length;i++){
+			var key=selfpara[i];var tmp=$('#'+key);
+			//如果是允许空的，就不用考虑他有没有空的事情了；反之不在这里头，就要考虑了
+			if(no_usrupdate.indexOf(key)==-1&&allowempty.indexOf(key)==-1){
+				if($.trim(tmp.val())==''){
+					alert(para[key]+'不能为空');tmp.focus();return;
+				}
+			}
+			
+		}
+		//然后判断哪些是有变动的，变动的数值需要提交修改，没有变动的则直接不用接后台了
+		//其中添加需要全盘给上，修改只用给变量就行
+		if(addormdf!=0){
+			var flag_change=0;
+			for(var i=1;i<selfpara.length;i++){
+				//排除掉不用管的
+				var key=selfpara[i];var tmp=$('#'+key);var valuenow=$.trim(tmp.val());
+				if(no_usrupdate.indexOf(key)==-1){
+					if(valuenow!=origindata[key]){
+						flag_change=1;
+						obj[key]=valuenow;
+					}
+				}
+			}
+			if(flag_change==0){alert('没有任何信息改变');return;}
+		}else{
+			for(var i=1;i<selfpara.length;i++){
+				var key=selfpara[i];var tmp=$('#'+key);var valuenow=$.trim(tmp.val());
+				if(no_usrupdate.indexOf(key)==-1){
+					obj[key]=valuenow;
+				}
+			}
+		}
+
+		
+
+		$.ajax({
+            'type': 'GET',
+            'url':doupdate,
+            'async':false,  
+            'contentType': 'application/json',
+            'data': obj,
+            'dataType': 'json',
+            'success': function(data) {
+            	var str='';
+            	if(data['pattern']=='0'){str='添加';}else{str='修改';}
+            	alert(str+'成功！点击返回');
+            	window.location.href=document.referrer;
+                console.log("success");
+            },
+            'error':function() {
+                console.log("error");
+            }
+        });
+	})
+})
+</script>

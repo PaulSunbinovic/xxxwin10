@@ -1,0 +1,22 @@
+
+<!--table部分-->
+<div class='col-md-12' style="padding-top: 20px">
+	<!--开始-->
+	<table class='table table-hover table-striped table-bordered'>
+		<tbody>
+			<?php foreach($para as $k=>$v){
+					if(!in_array($k, $no_usrct)){
+			 ?>
+			<?php if($k=='usrpt'){ ?>
+			 <tr><td>{$para[$k]}</td><td><img class='img-circle' style='height: 70px;width: 70px' src='{$mo[$k]}'></td></tr>
+			<?php }else{ ?>
+			<tr><td>{$para[$k]}</td><td>{$mo[$k]}</td></tr>
+			<?php } ?>
+			<?php }
+			} ?>
+		</tbody>
+	</table>
+	<a class='btn btn-success' href="__URL__/usrupdate">修改个人信息</a>
+	<a class='btn btn-warning' href="__URL__/usrmdfpw">修改密码</a>
+</div>
+
