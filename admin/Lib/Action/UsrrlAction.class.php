@@ -19,7 +19,7 @@ class UsrrlAction extends Action {
       'allowempty'=>array(),
 
       'hide_fld'=>array('usrrlid','f_usrrl_usrid','f_usrrl_rlid','f_rl_grpid'),//NB
-      'hide_cdt'=>array('usrrlid','usrnn','rlnm','f_rl_grpid','grpnm'),//NB
+      'hide_cdt'=>array('usrrlid','usrnn','rlnm','grpnm'),//NB
   		
     //   'spccdtls'=>array('spccdt_0'=>array('aaid<>0','aaID不为0【废话只是测试】')),
   		// 'odrls'=>array('aanm'),
@@ -82,6 +82,10 @@ class UsrrlAction extends Action {
       }
       $this->assign('f_usrrl_rlid',$rllsall);
 
+      $arr_grpls=$grp->getmlsbyodr('grpodr ASC');$grpls=$arr_grpls['data'];
+      $arr=$tree->unlimitedForListSLCT($grpls,0,'grpid','grpnm','grppid','grpodr');
+      $this->assign('f_rl_grpid',$arr);
+
       //dingshio
       $this->display('Cmn:query');
   
@@ -130,6 +134,7 @@ class UsrrlAction extends Action {
         
       }
       $this->assign('f_usrrl_rlid',$rllsall);
+
 
       //dingshio
 		  $this->display('Cmn:update');
