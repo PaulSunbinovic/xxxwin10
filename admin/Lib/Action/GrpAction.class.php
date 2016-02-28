@@ -92,13 +92,18 @@ class GrpAction extends Action{
 		$this->display('edit');
 	}
 
-	//公版
+	//
    	public function update(){
    		header("Content-Type:text/html; charset=utf-8");
     	$pb=D('PB');
     	$pb->update($this->all);
-    	    	
-		$this->display('update');
+    	 //dingzhis
+      //如果是添加的话需要初始给点数据的 重新覆盖添加的mo
+      $id=$_GET['id'];$pid=$_GET['pid'];$odr=$_GET['odr'];
+      if($id==0){$mo['grppid']=$pid;$mo['grpodr']=$odr;$this->assign('mo',$mo);}
+       //dingzhio 	
+      
+		  $this->display('update');
    	}
 
    	//公版

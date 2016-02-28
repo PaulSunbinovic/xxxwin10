@@ -15,7 +15,7 @@
 			<tr><td>{$v}</td><td>
 			<?php if(strstr($k, '_')){ ?>
 			<select id='{$k}'>
-				<option value=''>无</option>
+				<option value='0'>无</option>
 				<?php //处理萃取下主题
                   $tmp=explode('_', $k);$tmp=explode('id',$tmp[2]);$tmp=$tmp[0];
                 ?>
@@ -57,7 +57,7 @@ origindata["{$k}"]="{$moforjs[$k]}";
 } 
 ?>
 
-//zabojin的属性里面不用管的，也不用显示的
+//不用管的，也不用显示的
 var no_update=new Array();
 <?php 
 foreach($no_update as $nuv){ 
@@ -75,19 +75,31 @@ allowempty.push("{$aev}");
 <?php 
 } 
 ?>
+//transmean
+var transmeank=new Array();
+<?php 
+foreach($transmean as $tmvk=>$tmvv){ 
+?>
+transmeank.push("{$tmvk}");
+<?php 
+} 
+?>
 
 //#########
 $(function(){
 	$('#update').click(function(){
+
 		//首先把相关的参数数据聚集起来，把自身更新需要的参数以及变动的数据进行传输
 		//由于第一个往往是id所以，就不去考虑了
 		//先判断是否为空
 		for(var i=1;i<selfpara.length;i++){
 			var key=selfpara[i];var tmp=$('#'+key);
 			//如果是允许空的，就不用考虑他有没有空的事情了；反之不在这里头，就要考虑了
-			if(no_update.indexOf(key)==-1&&allowempty.indexOf(key)==-1){
-				if($.trim(tmp.val())==''){
+			if(no_update.indexOf(key)==-1&&allowempty.indexOf(key)==-1){var tagname=tmp.get(0).tagName;
+				if(tagname=='INPUT'&&$.trim(tmp.val())==''){
 					alert(para[key]+'不能为空');tmp.focus();return;
+				}else if(transmeank.indexOf(key)==-1&&tagname=='SELECT'&&$.trim(tmp.val())=='0'){
+					alert(para[key]+'未选择');tmp.focus();return;
 				}
 			}
 			

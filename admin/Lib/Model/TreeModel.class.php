@@ -264,7 +264,7 @@ class TreeModel{
 		foreach ($cate as $v) {
 			if ($v[$pidzd] == $pid) {
 				array_push($arr,$v[$idzd]);
-				array_merge($arr,self::unlimitedForListID($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
+				$arr=array_merge($arr,self::unlimitedForListID($cate,$v[$idzd],$idzd,$nmzd,$pidzd,$odrzd));
 				
 			}
 		}
